@@ -14,7 +14,7 @@ class Database:
         self.io = DataIO.DataIO(self.file_path)
         
     def register_user(self, username, password):
-        data = self.load_data()
+        data = self.io.load_data()
         for user in data:
             if user["username"] == username:
                 print("duplicate found")
