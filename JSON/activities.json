@@ -1,0 +1,17 @@
+[
+    {
+        "user_id": "1",
+        "activity": "jogging",
+        "activity_kind": "no",
+        "done": [
+            [
+                2,
+                "wednesday"
+            ],
+            [
+                1,
+                "tuesday"
+            ]
+        ]
+    }
+]
