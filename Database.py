@@ -8,10 +8,11 @@ from datetime import datetime
 
 class Database:
 
-    def __init__(self, file_path):
+    def __init__(self, file_path: str):
         self.file_path = file_path
         self.io = DataIO.DataIO(self.file_path)
-    def __init__(self, io):
+
+    def __init__(self, io: DataIO.DataIO):
         self.io = io
            
     def create_user(self, username, password):
@@ -19,6 +20,15 @@ class Database:
         for user in data:
             if user["username"] == username:
                 return False
+            
+        new_user = {
+            'username': username,
+            'password': password,
+            'activities': []
+        }
+        data.append(new_user)
+        self.io.save_data(data=data)
+
     def load_data(self):
         if os.path.exists(self.file_path):
             with open(self.file_path, 'r') as file:
@@ -30,17 +40,11 @@ class Database:
         with open(self.file_path, 'w') as file:
             json.dump(data, file, indent=4)
 
-        new_user = {
-            'username': username,
-            'password': password,
-            'activities': []
-        }
-        data.append(new_user)
-        self.io.save_data(data=data)
         return True
 
     def create_activity(self, user_id, activity_name, time_set, time_elapsed):
         data = self.io.load_data()
+        today_date = datetime.today().strftime('%Y/%m/%d')
         user_found = False
         for user in data:
             if user_id == user["username"]:
