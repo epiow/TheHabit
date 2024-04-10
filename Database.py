@@ -8,31 +8,30 @@ records while the username and password parameters will be used to authenticate 
 '''
 class Database:
     file_path = os.path.join('JSON', 'data.json')
-
-    def load_data():
-        if os.path.exists(file_path):
-            with(file_path, 'r') as file:
+    def __init__(self, file_path):
+        self.file_path = file_path
+    def load_data(self):
+        if os.path.exists(self.file_path):
+            with open(self.file_path, 'r') as file:
                 return json.load(file)
         else:
             return []
 
-    def save_data(data):
-        with open(file_path, 'w') as file:
+    def save_data(self, data):
+        with open(self.file_path, 'w') as file:
             json.dump(data, file, indent=4)
 
-    def register_user(username, password):
-        users = load_users(file_path)
-        
-        new_user_id = 1
-        if users:
-            new_user_id = max(user['id'] for user in users) + 1
+    def register_user(self, username, password):
+        data = self.load_data()
 
         new_user = {
-            'id': new_user_id,
             'username': username,
             'password': password,
             'activities': []
         }
+        data.append(new_user)
+        self.save_data(data=data)
+
     def create_activity(self, user_id, activity_name, time_set, time_elapsed):
         print(self.file_path)
         data = self.load_data()
@@ -91,8 +90,8 @@ def save_activities(file_path, activities):
     with open(file_path, 'w') as file:
         json.dump(activities, file, indent=4)
 
-def create_activity(user_id, activity_name, timed, performed, file_path):
-    data = load_activity(file_path)
+def create_activity(self, user_id, activity_name, time_duration, time_elapsed):
+    data = load_activity(self.file_path)
     
     activity_found = False
     for i in data:
@@ -115,4 +114,3 @@ def create_activity(user_id, activity_name, timed, performed, file_path):
 
     save_activities(file_path, acts)
 
-#create_activity('1', 'jogging', 'no', [[1, 'tuesday']], file_path_acts)
