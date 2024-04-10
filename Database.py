@@ -1,9 +1,13 @@
 import json
 import os
+
 import DataIO
+import pandas as pd
+import numpy as np
 from datetime import datetime
 
 class Database:
+
     def __init__(self, file_path):
         self.file_path = file_path
         self.io = DataIO.DataIO(self.file_path)
@@ -15,6 +19,17 @@ class Database:
         for user in data:
             if user["username"] == username:
                 return False
+    def load_data(self):
+        if os.path.exists(self.file_path):
+            with open(self.file_path, 'r') as file:
+                return json.load(file)
+        else:
+            return []
+
+    def save_data(self, data):
+        with open(self.file_path, 'w') as file:
+            json.dump(data, file, indent=4)
+
         new_user = {
             'username': username,
             'password': password,
@@ -28,27 +43,35 @@ class Database:
         data = self.io.load_data()
         user_found = False
         for user in data:
-            if(user_id == user["username"]):
+            if user_id == user["username"]:
                 user_found = True
                 activity_found = False
                 for activity in user["activities"]:
-                    if(activity_name in activity["name"]):
+                    if activity_name in activity["name"]:
                         activity_found = True
-                        new_activity_entry = {
-                            "date_performed": datetime.today().timestamp(),
-                            "time_set": time_set,
-                            "time_elapsed": time_elapsed
-                        }
-                        activity["times_performed"].append(new_activity_entry)
+                        for entry in activity["times_performed"]:
+                            if entry["date_performed"] == today_date:
+                                entry["count"] += 1
+                                entry["time_elapsed"]
+                                break
+                        else:
+                            new_activity_entry = {
+                                "date_performed": today_date,
+                                "time_set": time_set,
+                                "time_elapsed": time_elapsed,
+                                "count": 1 
+                            }
+                            activity["times_performed"].append(new_activity_entry)
                         break
-                if(activity_found == False):
+                if not activity_found:
                     new_activity = {
                         "name": activity_name,
                         "times_performed": [
                             {
-                                "date_performed": datetime.today().timestamp(),
+                                "date_performed": today_date,
                                 "time_set": time_set,
-                                "time_elapsed": time_elapsed
+                                "time_elapsed": time_elapsed,
+                                "count": 1  
                             }
                         ]
                     }
