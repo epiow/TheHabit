@@ -7,9 +7,9 @@ the id parameter will allow the program to connect the users to their correspond
 records while the username and password parameters will be used to authenticate the user to the program.
 '''
 class Database:
-    file_path = os.path.join('JSON', 'data.json')
-    def __init__(self, file_path):
-        self.file_path = file_path
+    def __init__(self):
+        self.file_path = './JSON/user.json'
+
     def load_data(self):
         if os.path.exists(self.file_path):
             with open(self.file_path, 'r') as file:
