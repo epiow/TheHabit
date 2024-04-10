@@ -18,7 +18,7 @@ class Database:
         for user in data:
             if user["username"] == username:
                 print("duplicate found")
-                return
+                return False
         new_user = {
             'username': username,
             'password': password,
@@ -26,7 +26,7 @@ class Database:
         }
         data.append(new_user)
         self.io.save_data(data=data)
-        return False
+        return True
 
     def create_activity(self, user_id, activity_name, time_set, time_elapsed):
         data = self.io.load_data()
