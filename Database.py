@@ -1,6 +1,6 @@
 import json
 import os
-
+from datetime import datetime
 '''
 Script below appends new users to the user.json database
 the id parameter will allow the program to connect the users to their corresponding
