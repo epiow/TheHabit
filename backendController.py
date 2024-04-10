@@ -16,7 +16,8 @@ class User():
         for user in data:
             if(self.username == user["username"]):
                 for activity in user["activities"]:
-                    activity_to_set = Activity(activity["name"], activity["times_performed"])
+                    activity_to_set = Activity(activity["name"])
+                    activity_to_set.setEntries(activity["times_performed"])
                     self.activities.append(activity_to_set)
                     
     def loginUser(self):
@@ -33,14 +34,19 @@ class User():
         return self.db.create_user(self.username, self.password)
 
 class Activity():
-    def __init__(self, activity_name, times_performed):
+    def __init__(self, activity_name):
         self.name = activity_name
         self.entries = []
-        self.setEntries(times_performed)
     def setEntries(self, times_performed):
         for entry in times_performed:
-            new_entry = ActivityEntry(entry["date_performed"], entry["time_set"], entry["time_elapsed"], 0)
+            new_entry = ActivityEntry(entry["date_performed"], entry["time_set"], entry["time_elapsed"], entry["count"])
             self.entries.append(new_entry)
+    def addEntry(self, date_performed, time_set, time_elapsed, count):
+        new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
+        for entry in self.entries:
+            if(new_entry.date_performed == entry.date_performed):
+                return False
+        self.entries.append(new_entry)
         
 class ActivityEntry():
     def __init__(self, date_performed, time_set, time_elapsed, count):
