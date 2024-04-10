@@ -1,9 +1,6 @@
 import flet as ft
 import os
 import Database
-import View
-import json
-
 import json
 
 class Login:
@@ -25,7 +22,7 @@ class Login:
             print("Error: Failed to decode JSON from 'users.json'")
             return False
 
-        if self.username in user_data and user_data[self.username] == self.password:
+        if self.username in user_data and user_data["password"] == self.password:
             self.authenticated = True
             return True
         else:
@@ -46,131 +43,26 @@ class Register:
             with open('user.json', 'w') as file:
                 json.dump(user_data, file)
             return True 
-
-'''
-FOR REVISIONS
-
+        
 class Habit:
-    def __init__(self, habit_name, habit_status_change, habit_delete):
-        super().__init__()
-        self.completed = False
+    
+    def __init__(self, habit_name, habit_description, habit_days, habit_time):
         self.habit_name = habit_name
-        self.habit_status_change = habit_status_change
-        self.habit_delete = habit_delete
+        self.habit_description = habit_description
+        self.habit_days = habit_days
+        self.habit_time = habit_time
 
-    def build(self):
-        self.display_habit = ft.Checkbox(
-            value=False, label=self.habit_name, on_change=self.status_changed
-        )
-        self.edit_name = ft.TextField(expand=1)
-
-        self.display_view = ft.Row(
-            alignment="spaceBetween",
-            vertical_alignment="center",
-            controls=[
-                self.display_habit,
-                ft.Row(
-                    spacing=0,
-                    controls=[
-                        ft.IconButton(
-                            icon=ft.icons.CREATE_OUTLINED,
-                            tooltip="Edit To-Do",
-                            on_click=self.edit_clicked,
-                        ),
-                        ft.IconButton(
-                            ft.icons.DELETE_OUTLINE,
-                            tooltip="Delete To-Do",
-                            on_click=self.delete_clicked,
-                        ),
-                    ],
-                ),
-            ],
-        )
-
-        self.edit_view = ft.Row(
-            visible=False,
-            alignment="spaceBetween",
-            vertical_alignment="center",
-            controls=[
-                self.edit_name,
-                ft.IconButton(
-                    icon=ft.icons.DONE_OUTLINE_OUTLINED,
-                    icon_color=ft.colors.GREEN,
-                    tooltip="Update To-Do",
-                    on_click=self.save_clicked,
-                ),
-            ],
-        )
-        return ft.Column(controls=[self.display_view, self.edit_view])
-
-    async def edit_clicked(self, e):
-        self.edit_name.value = self.display_habit.label
-        self.display_view.visible = False
-        self.edit_view.visible = True
-        await self.update_async()
-
-    async def save_clicked(self, e):
-        self.display_habit.label = self.edit_name.value
 
 class Calendar:
-    def __init__(self, calendar_name, calendar_status_change, calendar_delete):
-        super().__init__()
-        self.completed = False
-        self.calendar_name = calendar_name
-        self.calendar_status_change = calendar_status_change
-        self.calendar_delete = calendar_delete
+    def __init__(self, habit_name, habit_days, habit_time):
+        self.habit_name = habit_name
+        self.habit_days = habit_days
+        self.habit_time = habit_time
+        self.calendar = { "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": [], "Saturday": [], "Sunday": [] }
 
-    def build(self):
-        self.display_calendar = ft.Checkbox(
-            value=False, label=self.calendar_name, on_change=self.status_changed
-        )
-        self.edit_name = ft.TextField(expand=1)
+class User:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+    
 
-        self.display_view = ft.Row(
-            alignment="spaceBetween",
-            vertical_alignment="center",
-            controls=[
-                self.display_calendar,
-                ft.Row(
-                    spacing=0,
-                    controls=[
-                        ft.IconButton(
-                            icon=ft.icons.CREATE_OUTLINED,
-                            tooltip="Edit To-Do",
-                            on_click=self.edit_clicked,
-                        ),
-                        ft.IconButton(
-                            ft.icons.DELETE_OUTLINE,
-                            tooltip="Delete To-Do",
-                            on_click=self.delete_clicked,
-                        ),
-                    ],
-                ),
-            ],
-        )
-
-        self.edit_view = ft.Row(
-            visible=False,
-            alignment="spaceBetween",
-            vertical_alignment="center",
-            controls=[
-                self.edit_name,
-                ft.IconButton(
-                    icon=ft.icons.DONE_OUTLINE_OUTLINED,
-                    icon_color=ft.colors.GREEN,
-                    tooltip="Update To-Do",
-                    on_click=self.save_clicked,
-                ),
-            ],
-        )
-        return ft.Column(controls=[self.display_view, self.edit_view])
-
-    async def edit_clicked(self, e):
-        self.edit_name.value = self.display_calendar.label
-        self.display_view.visible = False
-        self.edit_view.visible = True
-        await self.update_async()
-
-    async def save_clicked(self, e):
-        self.display_calendar.label = self.edit_name.value
-'''
