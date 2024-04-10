@@ -3,4 +3,4 @@ import View
 from backendController import Login
 
 if __name__ == "__main__":
-    ft.app(target=View.login)
+    ft.app(target=View.loginWindow)
