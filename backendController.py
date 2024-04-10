@@ -45,21 +45,23 @@ class Login(User):
         #    return True
             else:
                 return False
-                
+ 
 class Register:
-    #register function
-    def __init__ (self, username, password):
-        self.username = username
-        self.password = password
+    def __init__(self, username, password):
+        if not self.alreadyRegistered(username, password):
+            Database.register_new_user(username, password, './JSON/user.json')
 
-    def registerUser(self, user_data):
-        if self.username in user_data:
-            return False
-        else:
-            user_data[self.username] = self.password
-            with open('user.json', 'w') as file:
-                json.dump(user_data, file)
-            return True 
+    def alreadyRegistered(self, username, password):
+        folder_path = 'JSON'
+        file_path_user = os.path.join(folder_path, 'user.json')
+
+        with open(file_path_user, 'r') as file:
+            user_data = json.load(file)
+
+        for users in user_data:
+            if username == users['username']:
+                return True
+        return False
         
 class Habit(User):
     def __init__(self, habit_name, habit_description, habit_setting):
@@ -70,13 +72,12 @@ class Habit(User):
     def habit_TimeSetter(self, habit_setting):
         for x in habit_setting:
             dayOfActivity = Calendar(x[0], x[1])
+
+    def set_newHabit():
+        pass
 class Calendar(Habit):
     def __init__(self, habit_date, habit_day):
         #self.specific_habit = habit_name
         self.habit_date = habit_date
         self.habit_day = habit_day
         self.calendar = { "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": [], "Saturday": [], "Sunday": [] }
-
-
-login = Login("fp", "sangilan")
-login.userVerification()
