@@ -1,83 +1,57 @@
 import flet as ft
 import os
+import DataIO
 import Database
 import json
 
-class User:
+class User():
     def __init__(self, username, password):
+        self.io = DataIO.DataIO('./JSON/data.json')
+        self.db = Database.Database(self.io)
         self.username = username
         self.password = password
+        self.activities = []
+    def setActivities(self):
+        data = self.io.load_data()
+        for user in data:
+            if(self.username == user["username"]):
+                for activity in user["activities"]:
+                    activity_to_set = Activity(activity["name"], activity["times_performed"])
+                    self.activities.append(activity_to_set)
+                    
+    def loginUser(self):
+        data = self.io.load_data()
+        userExists = False
+        for user in data:
+            if self.username == user["username"] and self.password == user["password"]:
+                userExists = True
+                self.setActivities()
+                break
+        return userExists
+            
+    def registerUser(self):
+        return self.db.create_user(self.username, self.password)
 
-    def setHabits(self):
-        folder_path = 'JSON'
-        file_path_acts = os.path.join(folder_path, 'activities.json')
-        with open(file_path_acts, 'r') as acts:
-            activities = json.load(acts)
+class Activity():
+    def __init__(self, activity_name, times_performed):
+        self.name = activity_name
+        self.entries = []
+        self.setEntries(times_performed)
+    def setEntries(self, times_performed):
+        for entry in times_performed:
+            new_entry = ActivityEntry(entry["date_performed"], entry["time_set"], entry["time_elapsed"], 0)
+            self.entries.append(new_entry)
         
-            for activity in activities:
-                if self.userID == int(activity['user_id']):
-                    habit = Habit(activity['activity'], activity['activity_kind'], activity["done"])   
-                    print(self.username + ' ' + habit.habit_name)
-class Login(User):
-    def __init__(self, username, password):
-        super().__init__(username, password)
+class ActivityEntry():
+    def __init__(self, date_performed, time_set, time_elapsed, count):
+        self.date_performed = date_performed
+        self.time_set = time_set
+        self.time_elapsed = time_elapsed
+        self.count = count
 
-    def userVerification(self):
-        folder_path = 'JSON'
-        file_path_user = os.path.join(folder_path, 'user.json')
-        try:
-            with open(file_path_user, 'r') as file:
-                user_data = json.load(file)
-        except FileNotFoundError:
-            print("Error: File 'user.json' not found")
-            return False
-        except json.JSONDecodeError:
-            print("Error: Failed to decode JSON from 'users.json'")
-            return False
-
-        for users in user_data:
-            if self.username == users['username'] and self.password == users['password']:
-                self.userID = users['id']
-                super().setHabits()
-                return True
-        #if self.username in user_data and user_data["password"] == self.password:
-        #    self.authenticated = True
-        #    return True
-            else:
-                return False
- 
-class Register:
-    def __init__(self, username, password):
-        if not self.alreadyRegistered(username, password):
-            Database.register_new_user(username, password, './JSON/user.json')
-
-    def alreadyRegistered(self, username, password):
-        folder_path = 'JSON'
-        file_path_user = os.path.join(folder_path, 'user.json')
-
-        with open(file_path_user, 'r') as file:
-            user_data = json.load(file)
-
-        for users in user_data:
-            if username == users['username']:
-                return True
-        return False
-        
-class Habit(User):
-    def __init__(self, habit_name, habit_description, habit_setting):
-        self.habit_name = habit_name
-        self.habit_description = habit_description
-        self.habit_TimeSetter(habit_setting)
-
-    def habit_TimeSetter(self, habit_setting):
-        for x in habit_setting:
-            dayOfActivity = Calendar(x[0], x[1])
-
-    def set_newHabit():
-        pass
-class Calendar(Habit):
-    def __init__(self, habit_date, habit_day):
-        #self.specific_habit = habit_name
-        self.habit_date = habit_date
-        self.habit_day = habit_day
-        self.calendar = { "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": [], "Saturday": [], "Sunday": [] }
+user = User("yo", "yuh")
+user.loginUser()
+for i in user.activities:
+    print(i.name)
+    for j in i.entries:
+        print(j.date_performed)
