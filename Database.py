@@ -33,10 +33,48 @@ class Database:
             'password': password,
             'activities': []
         }
+    def create_activity(self, user_id, activity_name, time_set, time_elapsed):
+        print(self.file_path)
+        data = self.load_data()
+        user_found = False
+        for user in data:
+            if(user_id == user["username"]):
+                print("user found")
+                user_found = True
+                activity_found = False
+                for activity in user["activities"]:
+                    print(activity)
+                    if(activity_name in activity["name"]):
+                        print("activity found")
+                        activity_found = True
+                        new_activity_entry = {
+                            "date_performed": datetime.today().strftime('%Y/%m/%d'),
+                            "time_set": time_set,
+                            "time_elapsed": time_elapsed
+                        }
+                        activity["times_performed"].append(new_activity_entry)
+                        break
+                if(activity_found == False):
+                    print("activity not found")
+                    new_activity = {
+                        "name": activity_name,
+                        "times_performed": [
+                            {
+                                "date_performed": datetime.today().strftime('%Y/%m/%d'),
+                                "time_set": time_set,
+                                "time_elapsed": time_elapsed
+                            }
+                        ]
+                    }
+                    user["activities"].append(new_activity)
+                    break
+        self.save_data(data)
+        
+            
 
-        users.append(new_user)
+                    
 
-        save_users(file_path, users)
+                    
 
 
 '''
