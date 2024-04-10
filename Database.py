@@ -1,5 +1,6 @@
 import json
 import os
+import DataIO
 from datetime import datetime
 '''
 Script below appends new users to the user.json database
@@ -10,17 +11,8 @@ class Database:
     file_path = os.path.join('JSON', 'data.json')
     def __init__(self, file_path):
         self.file_path = file_path
-    def load_data(self):
-        if os.path.exists(self.file_path):
-            with open(self.file_path, 'r') as file:
-                return json.load(file)
-        else:
-            return []
-
-    def save_data(self, data):
-        with open(self.file_path, 'w') as file:
-            json.dump(data, file, indent=4)
-
+        self.io = DataIO.DataIO(self.file_path)
+        
     def register_user(self, username, password):
         data = self.load_data()
         for user in data:
@@ -33,10 +25,11 @@ class Database:
             'activities': []
         }
         data.append(new_user)
-        self.save_data(data=data)
+        self.io.save_data(data=data)
+        return False
 
     def create_activity(self, user_id, activity_name, time_set, time_elapsed):
-        data = self.load_data()
+        data = self.io.load_data()
         user_found = False
         for user in data:
             if(user_id == user["username"]):
@@ -65,4 +58,4 @@ class Database:
                     }
                     user["activities"].append(new_activity)
                     break
-        self.save_data(data)
+        self.io.save_data(data)
