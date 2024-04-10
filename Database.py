@@ -2,22 +2,18 @@ import json
 import os
 import DataIO
 from datetime import datetime
-'''
-Script below appends new users to the user.json database
-the id parameter will allow the program to connect the users to their corresponding
-records while the username and password parameters will be used to authenticate the user to the program.
-'''
+
 class Database:
-    file_path = os.path.join('JSON', 'data.json')
     def __init__(self, file_path):
         self.file_path = file_path
         self.io = DataIO.DataIO(self.file_path)
-        
-    def register_user(self, username, password):
+    def __init__(self, io):
+        self.io = io
+           
+    def create_user(self, username, password):
         data = self.io.load_data()
         for user in data:
             if user["username"] == username:
-                print("duplicate found")
                 return False
         new_user = {
             'username': username,
