@@ -1,7 +1,7 @@
 import flet as ft
 import json
 import Database
-from backendController import Login, Register    
+import backendController  
 
 def login(page: ft.Page):
     page.title = "Login Example"
