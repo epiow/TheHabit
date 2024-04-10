@@ -6,7 +6,12 @@
     },
     {
         "id": 2,
-        "username": "fp",
-        "password": "sangilan"
+        "username": "aaron",
+        "password": "abadiano"
+    },
+    {
+        "id": 3,
+        "username": "bonjour",
+        "password": "alhama"
     }
 ]
