@@ -46,7 +46,7 @@ class Database:
                     if(activity_name in activity["name"]):
                         activity_found = True
                         new_activity_entry = {
-                            "date_performed": datetime.today().strftime('%Y/%m/%d'),
+                            "date_performed": datetime.today().timestamp(),
                             "time_set": time_set,
                             "time_elapsed": time_elapsed
                         }
@@ -57,7 +57,7 @@ class Database:
                         "name": activity_name,
                         "times_performed": [
                             {
-                                "date_performed": datetime.today().strftime('%Y/%m/%d'),
+                                "date_performed": datetime.today().timestamp(),
                                 "time_set": time_set,
                                 "time_elapsed": time_elapsed
                             }
