@@ -7,9 +7,9 @@ the id parameter will allow the program to connect the users to their correspond
 records while the username and password parameters will be used to authenticate the user to the program.
 '''
 class Database:
-    def __init__(self):
-        self.file_path = './JSON/user.json'
-
+    file_path = os.path.join('JSON', 'data.json')
+    def __init__(self, file_path):
+        self.file_path = file_path
     def load_data(self):
         if os.path.exists(self.file_path):
             with open(self.file_path, 'r') as file:
@@ -46,7 +46,7 @@ class Database:
                     if(activity_name in activity["name"]):
                         activity_found = True
                         new_activity_entry = {
-                            "date_performed": datetime.today().timestamp(),
+                            "date_performed": datetime.today().strftime('%Y/%m/%d'),
                             "time_set": time_set,
                             "time_elapsed": time_elapsed
                         }
@@ -57,7 +57,7 @@ class Database:
                         "name": activity_name,
                         "times_performed": [
                             {
-                                "date_performed": datetime.today().timestamp(),
+                                "date_performed": datetime.today().strftime('%Y/%m/%d'),
                                 "time_set": time_set,
                                 "time_elapsed": time_elapsed
                             }
