@@ -4,8 +4,6 @@ from backendController import Login
 def main(page: ft.Page):
     page.title = "Login Example"
 
-
-    
     def login_clicked(e):
         login_user = Login(username.value, password.value)
         if login_user.userVerification():
