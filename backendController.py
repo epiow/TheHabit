@@ -22,12 +22,15 @@ class Login:
             print("Error: Failed to decode JSON from 'users.json'")
             return False
 
-        if self.username in user_data and user_data["password"] == self.password:
-            self.authenticated = True
-            return True
-        else:
-            return False
-            
+        for users in user_data:
+            if self.username == users['username'] and self.password == users['password']:
+                return True
+        #if self.username in user_data and user_data["password"] == self.password:
+        #    self.authenticated = True
+        #    return True
+            else:
+                return False
+                
         
 class Register:
     #register function

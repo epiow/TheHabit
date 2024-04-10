@@ -39,7 +39,7 @@ def register_new_user(username, password, file_path):
 
     save_users(file_path, users)
 
-register_new_user('fp', 'sangilan', file_path_user)
+#register_new_user('fp', 'sangilan', file_path_user)
 
 '''
 The following script is used to create/update the users' activity log in the activity chart
