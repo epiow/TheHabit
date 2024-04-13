@@ -3,24 +3,29 @@ import os
 def yo():
     print("yo")
 
-UserColors = {
-    "accent": "#1bcf6e",
-    "background": "#e5e5e5",
-    "foreground": "#D9000000",
-    
+UserVariables = {
+    "window.scale": 2,
+
+    "color.accent": "#1bcf6e",
+    "color.background": "#e5e5e5",
+    "color.dotmatrix": "#0D000000",
+    "color.foreground": "#D9000000",
 }
 
+def scale(value):
+    return value * UserVariables["window.scale"]
+
 def login(page: ft.Page):
-    colors = UserColors
+    vars = UserVariables
     page.title = "Login Example"
-    page.window_width = 286*2
-    page.window_height = 330*2
-    page.bgcolor = colors["background"]
+    page.window_width = scale(286)
+    page.window_height = scale(330)
+    page.bgcolor = vars["color.background"]
     svgLogo = ft.Image(
         src=os.path.join(os.getcwd(), "Assets/logo-big-full.svg"),
         fit=ft.ImageFit.FILL,
-        width=198*2,
-        height=110*2,
+        width=scale(198),
+        height=scale(110),
     )
     bgDots = ft.Image(
         src=os.path.join(os.getcwd(), "Assets/dots.svg"),
@@ -42,53 +47,53 @@ def login(page: ft.Page):
             alignment=ft.alignment.center,
             padding=8
         ),
-        width= 154*2,
-        height= 22*2,
-        bgcolor= colors["accent"],
-        border_radius=4*2,
+        width= scale(154),
+        height= scale(22),
+        bgcolor= vars["color.accent"],
+        border_radius=scale(4),
         ink=True,
         on_click=yo
     )
     staticUsername = ft.Text(
         "Username",
         font_family='Rockwell',
-        color='#000000',
+        color=vars["color.foreground"],
         weight='400',
-        size=12*2,
+        size=scale(12),
     )
     staticPassword = ft.Text(
         "Password",
         font_family='Rockwell',
-        color='#000000',
+        color=vars["color.foreground"],
         weight='400',
-        size=12*2,
+        size=scale(12),
     )
     editUsername = ft.TextField(
         text_style= ft.TextStyle(
                 font_family='Rockwell',
-                color='#000000',
+                color=vars["color.foreground"],
                 weight='400',
-                size=12*2,       
+                size=scale(12),       
         ),
         border=ft.InputBorder.NONE,
         cursor_color='#7F1BCF6E',
-        cursor_height=19*2,
+        cursor_height=scale(19),
         cursor_width=10,
         dense=True,
-        width=242*2,
-        height=22*2,
-        bgcolor='#0D000000',
+        width=scale(242),
+        height=scale(22),
+        bgcolor=vars["color.dotmatrix"],
     )
     editPassword = ft.TextField(
         border=ft.InputBorder.NONE,
         text_style= ft.TextStyle(
                 font_family='Rockwell',
-                color='#000000',
+                color=vars["color.foreground"],
                 weight='400',
                 size=12*2,       
         ),
         password=True,
-        color='#000000',
+        color=vars["color.foreground"],
         can_reveal_password=True,
         cursor_color='#7F1BCF6E',
         cursor_height=19*2,
@@ -96,7 +101,7 @@ def login(page: ft.Page):
         dense=True,
         width=242*2,
         height=22*2,
-        bgcolor='#0D000000',
+        bgcolor=vars["color.dotmatrix"],
     )
     staticUsername = ft.Container(
         staticUsername,
