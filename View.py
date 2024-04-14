@@ -1,24 +1,24 @@
 import flet as ft
 import os
-from primitives import UserColors, UserProperties
+from primitives import UserColors, UserColorsDark, UserProperties
 
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
-    colors                  = UserColors()
+    colors                  = UserColorsDark()
     page.title              = "the Habit: Login"
     page.window_width       = vars.scale(286)
     page.window_height      = vars.scale(330)
     page.bgcolor            = colors.background
     page.window_resizable   = False
-
+    print(os.path.join(os.getcwd(), "Assets", vars.logo_big_full))
     svgLogo                 = ft.Image(
-                                src     = os.path.join(os.getcwd(), "Assets/logo-big-full.svg"),
+                                src     = os.path.join(os.getcwd(), "Assets", vars.logo_big_full),
                                 fit     = ft.ImageFit.FILL,
                                 width   = vars.scale(198),
                                 height  = vars.scale(110),
                             )
     bgDots                  = ft.Image(
-                                src     = os.path.join(os.getcwd(), "Assets/dots.svg"),
+                                src     = os.path.join(os.getcwd(), "Assets", vars.dots),
                                 fit     = ft.ImageFit.FILL,
                                 width   = page.window_width,
                                 height  = page.window_height,
