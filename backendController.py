@@ -9,30 +9,26 @@ class Data():
         self.currentUser = None
         self.users = []
     def createUser(self, username, password):
-        if not self.findUser(username):
+        if self.findUser(username) is None:
             new_user = User(username, password)
             self.users.append(new_user)
             return True
         return False
     def findUser(self, username):
-        userFound = False
         for user in self.users:
             if user.username == username:
-                userFound = True
-                break
-        return userFound
+                return self.users.index(user)
+        return None
     def loginUser(self, username, password):
-        userFound = False
-        for user in self.users:
-            if user.username == username and user.password == password:
-                userFound = True
-                self.currentUser = self.users.index(user)
-                break
-        return userFound
+        userToLogin = self.findUser(username)
+        if self.users[userToLogin].password is password:
+            self.currentUser = userToLogin
+            return True
+        return False
     def editUser(self, username="", password=""):
         usernameSet = False
         passwordSet = False
-        if not self.findUser(username):
+        if self.findUser(username) is None:
             if username is not "":
                 usernameSet = True
                 self.users[self.currentUser].username = username
@@ -51,19 +47,25 @@ class User():
         self.currentActivity = None
         self.activities = []
     def createActivity(self, activity_name):
-        if not self.findActivity(activity_name):
+        if self.findActivity(activity_name) is None:
             new_activity = Activity(activity_name) 
             self.activities.append(new_activity)
+            return True
+        return False
     def findActivity(self, activity_name):
-        activityFound = False
         for activity in self.activities:
             if activity.activity_name == activity_name:
-                activityFound = True
-                break
-        return activityFound
+                return self.activities.index(activity)
+        return None
+    def setCurrentActivity(self, activity_name):
+        activityToSet = self.findActivity(activity_name)
+        if activityToSet is not None:
+            self.currentActivity = activityToSet
+            return True
+        return False
     def editActivity(self, activity_name=""):
         nameSet = False
-        if not self.findActivity(activity_name):
+        if self.findActivity(activity_name) is None:
             if activity_name is not "":
                 nameSet = True
                 self.activities[self.currentActivity].name = activity_name
