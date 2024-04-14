@@ -10,7 +10,10 @@ def windowLogin(page: ft.Page):
     page.window_height      = vars.scale(330)
     page.bgcolor            = colors.background
     page.window_resizable   = False
-    print(os.path.join(os.getcwd(), "Assets", vars.logo_big_full))
+
+    if page.platform is ft.PagePlatform.MACOS:
+        page.window_title_bar_hidden = True
+
     svgLogo                 = ft.Image(
                                 src     = os.path.join(os.getcwd(), "Assets", vars.logo_big_full),
                                 fit     = ft.ImageFit.FILL,
