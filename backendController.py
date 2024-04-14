@@ -76,6 +76,7 @@ class User():
 class Activity():
     def __init__(self, activity_name):
         self.name = activity_name
+        self.currentEntry = None
         self.entries = []
     def createEntry(self, date_performed, time_set, time_elapsed, count):
         new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
@@ -84,8 +85,14 @@ class Activity():
                 return False
         self.entries.append(new_entry)
     #TO IMPLEMENT
-    def findEntry(self):
-        pass
+    def findEntry(self, date_performed):
+        entryFound = False
+        for entry in self.entries:
+            if entry.date_performed == date_performed:
+                entryFound = True
+                self.currentEntry = self.entries.index(entry)
+                break
+        return entryFound
     def editEntry(self):
         pass
     def deleteEnty(self):
