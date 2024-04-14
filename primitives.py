@@ -1,5 +1,4 @@
 import flet as ft
-import os
 
 class UserColorsLight:
     accent      = '#1BCF6E'
