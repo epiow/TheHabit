@@ -77,16 +77,20 @@ class Activity():
     def __init__(self, activity_name):
         self.name = activity_name
         self.entries = []
-    def setEntries(self, times_performed):
-        for entry in times_performed:
-            new_entry = ActivityEntry(entry["date_performed"], entry["time_set"], entry["time_elapsed"], entry["count"])
-            self.entries.append(new_entry)
-    def addEntry(self, date_performed, time_set, time_elapsed, count):
+    def createEntry(self, date_performed, time_set, time_elapsed, count):
         new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
         for entry in self.entries:
             if(new_entry.date_performed == entry.date_performed):
                 return False
         self.entries.append(new_entry)
+    #TO IMPLEMENT
+    def findEntry(self):
+        pass
+    def editEntry(self):
+        pass
+    def deleteEnty(self):
+        pass
+    #TO IMPLEMENT
         
 class ActivityEntry():
     def __init__(self, date_performed, time_set, time_elapsed, count):
