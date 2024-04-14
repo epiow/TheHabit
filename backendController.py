@@ -25,14 +25,14 @@ class Data():
             self.currentUser = userToLogin
             return True
         return False
-    def editUser(self, username="", password=""):
+    def editUser(self, username=None, password=None):
         usernameSet = False
         passwordSet = False
         if self.findUser(username) is None:
-            if username is not "":
+            if username is not None:
                 usernameSet = True
                 self.users[self.currentUser].username = username
-            if password is not "":
+            if password is not None:
                 passwordSet = True
                 self.users[self.currentUser].password = password
         return [usernameSet, passwordSet]
@@ -63,10 +63,10 @@ class User():
             self.currentActivity = activityToSet
             return True
         return False
-    def editActivity(self, activity_name=""):
+    def editActivity(self, activity_name=None):
         nameSet = False
         if self.findActivity(activity_name) is None:
-            if activity_name is not "":
+            if activity_name is not None:
                 nameSet = True
                 self.activities[self.currentActivity].name = activity_name
         return nameSet
@@ -91,22 +91,22 @@ class Activity():
             if entry.date_performed == date_performed:
                 return self.entries.index(entry)
         return None
-    def editEntry(self, date_performed="", time_set="", time_elapsed="", count=""):
+    def editEntry(self, date_performed=None, time_set=None, time_elapsed=None, count=None):
         dateSet = False
         timeSet = False
         elapsedSet = False
         countSet = False
         if not self.findEntry(date_performed):
-            if date_performed is not "":
+            if date_performed is not None:
                 dateSet = True
                 self.entries[self.currentEntry].date_performed = date_performed
-            if time_set is not "":
+            if time_set is not None:
                 timeSet = True
                 self.entries[self.currentEntry].time_set = time_set
-            if time_elapsed is not "":
+            if time_elapsed is not None:
                 elapsedSet = True
                 self.entries[self.currentEntry].time_elapsed = time_elapsed
-            if count is not "":
+            if count is not None:
                 countSet = True
                 self.entries[self.currentEntry].count = count
         return [dateSet, timeSet, elapsedSet, countSet]
