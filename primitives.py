@@ -21,7 +21,7 @@ class UserProperties:
                         )
     def scale(self,value):
         return value * self.scale_factor
-    def set_transparency(value: str, alpha):
+    def set_transparency(self, value: str, alpha: float):
         return ('#' + hex(int(alpha * 255)).lstrip("0x") + value.lstrip("#")).upper()
 
 def login(page: ft.Page):
