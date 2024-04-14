@@ -111,5 +111,5 @@ def calendarWindow(page: ft.Page):
 
 
 if __name__ == "__main__":
-    ft.app(target=calendarWindow)    
+    ft.app(target=View.windowLogin)    
     #ft.app(target=View.login)
