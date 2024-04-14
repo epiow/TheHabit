@@ -79,25 +79,39 @@ class Activity():
         self.currentEntry = None
         self.entries = []
     def createEntry(self, date_performed, time_set, time_elapsed, count):
-        new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
-        for entry in self.entries:
-            if(new_entry.date_performed == entry.date_performed):
-                return False
-        self.entries.append(new_entry)
-    #TO IMPLEMENT
+        if self.findEntry(date_performed) is None:
+            new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
+            self.entries.append(new_entry)
+            return True
+        return False
     def findEntry(self, date_performed):
-        entryFound = False
         for entry in self.entries:
             if entry.date_performed == date_performed:
-                entryFound = True
-                self.currentEntry = self.entries.index(entry)
-                break
-        return entryFound
-    def editEntry(self):
-        pass
+                return self.entries.index(entry)
+        return None
+    def editEntry(self, date_performed="", time_set="", time_elapsed="", count=""):
+        dateSet = False
+        timeSet = False
+        elapsedSet = False
+        countSet = False
+        if not self.findEntry(date_performed):
+            if date_performed is not "":
+                dateSet = True
+                self.entries[self.currentEntry].date_performed = date_performed
+            if time_set is not "":
+                timeSet = True
+                self.entries[self.currentEntry].time_set = time_set
+            if time_elapsed is not "":
+                elapsedSet = True
+                self.entries[self.currentEntry].time_elapsed = time_elapsed
+            if count is not "":
+                countSet = True
+                self.entries[self.currentEntry].count = count
+        return [dateSet, timeSet, elapsedSet, countSet]
+                
     def deleteEnty(self):
-        pass
-    #TO IMPLEMENT
+        del self.entries[self.currentEntry]
+        self.currentEntry = None
         
 class ActivityEntry():
     def __init__(self, date_performed, time_set, time_elapsed, count):
