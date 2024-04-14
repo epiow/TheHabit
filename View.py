@@ -1,25 +1,28 @@
 import flet as ft
 import json
 import Database
-import backendController  
+from backendController import User
 
 def login(page: ft.Page):
     page.title = "Login Example"
+    page.window_width = 285*2
+    page.window_height = 319*2
     page.bgcolor ="#E5E5E5"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.padding = 80
 
     bg_img = ft.Image(
-        src=f"../Assets/logo-big-gray.svg",
+        src='./Assets/logo-big-mono.svg',
         width=100,
         height=100,
-        fit=ft.ImageFit.CONTAIN,
+        fit=ft.ImageFit.CONTAIN
     )
     
     def login_clicked(e):
-        login_user = Login(username.value, password.value)
-        if login_user.userVerification():
+        user = User(username.value, password.value)
+        
+        if user.loginUser() == True:
             dlg = ft.AlertDialog(
                 title=ft.Text("Login Successful"),
                 on_dismiss=lambda e: page.update(),
@@ -40,11 +43,11 @@ def login(page: ft.Page):
 
     
     buttonLogin = ft.Container(
-            width= 180,
-            height= 50,
+            width= 266*2,
+            height= 22*2,
             bgcolor= '#FF1bcf6e',
-            border_radius=4,
             alignment = ft.alignment.center,
+            border_radius=4,
             content= ft.Container(
                 padding=6,
                 content=ft.Text(
@@ -52,25 +55,29 @@ def login(page: ft.Page):
                     font_family='Rockwell',
                     color='#ffffff',
                     weight='400',
-                    size=12,
+                    size=12*2,
                 )
             ),
             ink=True,
             on_click=login_clicked,
     )
 
-    page.add(ft.Container(
-        ft.Column(
-            [
-                ft.Container(bg_img, alignment=ft.alignment.center),
-                ft.Container(username),
-                ft.Container(password),
-                ft.Container(buttonLogin, alignment=ft.alignment.center),
-            ]
-        ),
-        padding=20,
+    page.add
+    (
+
+        ft.Container
+        (
+            ft.Column
+            (
+                [
+                    ft.Container(bg_img, alignment=ft.alignment.center),
+                    ft.Container(username),
+                    ft.Container(password),
+                    ft.Container(buttonLogin, alignment=ft.alignment.center),
+                ]
+            )
+        )
     )
-)
     
 
 def registerWindow(page: ft.Page):
@@ -135,7 +142,7 @@ def registerWindow(page: ft.Page):
                 content=ft.Text(
                     'Create Account',
                     font_family='Rockwell',
-                    color='#ffffff',
+                    color='#dadada',
                     weight='400',
                     size=12,
                 )
@@ -147,12 +154,13 @@ def registerWindow(page: ft.Page):
     page.add(ft.Container(
         ft.Column(
             [
-                ft.Container(bg_img, alignment=ft.alignment.center),
+                ft.Container(bg_img),
                 ft.Container(username),
                 ft.Container(password),
                 ft.Container(confirm_password),
-                ft.Container(buttonLogin, alignment=ft.alignment.center),
-            ]
+                ft.Container(buttonLogin),
+            ],
+            alignment=ft.alignment.center
         ),
         padding=20,
     )

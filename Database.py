@@ -28,20 +28,7 @@ class Database:
         }
         data.append(new_user)
         self.io.save_data(data=data)
-
-    def load_data(self):
-        if os.path.exists(self.file_path):
-            with open(self.file_path, 'r') as file:
-                return json.load(file)
-        else:
-            return []
-
-    def save_data(self, data):
-        with open(self.file_path, 'w') as file:
-            json.dump(data, file, indent=4)
-
-        return True
-
+        
     def create_activity(self, user_id, activity_name, time_set, time_elapsed):
         data = self.io.load_data()
         today_date = datetime.today().strftime('%Y/%m/%d')
