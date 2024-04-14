@@ -1,6 +1,6 @@
 import flet as ft
 import os
-from primitives import UserColors, UserColorsDark, UserProperties
+from primitives import UserColorsLight, UserColorsDark, UserProperties
 
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
@@ -71,28 +71,28 @@ def windowLogin(page: ft.Page):
                                 bgcolor             = vars.set_transparency(colors.foreground, 0.05),
     )
 
-    staticUsername              = ft.Container(
-                                    staticUsername,
-                                    padding = 8,
-                                    left    = vars.scale(22),
-                                    top     = vars.scale(154)
-                                )
-    staticPassword              = ft.Container(
-                                    staticPassword,
-                                    padding = 8,
-                                    left    = vars.scale(22),
-                                    top     = vars.scale(198)
-                                )
-    editUsername                = ft.Container(
+    staticUsername          = ft.Container(
+                                staticUsername,
+                                padding = 8,
+                                left    = vars.scale(22),
+                                top     = vars.scale(154)
+                            )
+    staticPassword          = ft.Container(
+                                staticPassword,
+                                padding = 8,
+                                left    = vars.scale(22),
+                                top     = vars.scale(198)
+                            )
+    editUsername            = ft.Container(
                                 editUsername,
                                 left    = vars.scale(22),
                                 top     = vars.scale(176)
-                                )
-    editPassword                = ft.Container(
-                                    editPassword,
-                                    left    = vars.scale(22),
-                                    top     = vars.scale(220)
-                                )
+                            )
+    editPassword            = ft.Container(
+                                editPassword,
+                                left    = vars.scale(22),
+                                top     = vars.scale(220)
+                            )
     buttonLogin             = ft.Container(
                                 buttonLogin,
                                 left    = vars.scale(66),
@@ -103,7 +103,6 @@ def windowLogin(page: ft.Page):
                                 opacity = 0.2,
                                 left    = 0,
                                 top     = 0
-
                             )
     svgLogo                 = ft.Container(
                                 svgLogo,
