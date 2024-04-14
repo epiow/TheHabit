@@ -1,6 +1,5 @@
 import flet as ft
 import View
-from backendController import Login
 import Database as db
 
 database = db.Database('./JSON/data.json')
