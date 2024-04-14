@@ -25,7 +25,6 @@ class UserProperties:
         return ('#' + hex(int(alpha * 255)).lstrip("0x") + value.lstrip("#")).upper()
 
 def login(page: ft.Page):
-    print(vars.set_transparency('#FFFFFF', 0.5))
     vars                    = UserProperties()
     colors                  = UserColors()
     page.title              = "the Habit: Login"
