@@ -81,9 +81,13 @@ class Activity():
         self.currentEntry = None
         self.entries = []
     def createEntry(self, date_performed, time_set, time_elapsed, count):
-        if self.findEntry(date_performed) is None:
+        entryToIncrement = self.findEntry(date_performed)
+        if entryToIncrement is None:
             new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
             self.entries.append(new_entry)
+            return True
+        elif self.entryToIncrement.time_set is time_set:
+            self.findEntry[entryToIncrement].count = count + 1
             return True
         return False
     def findEntry(self, date_performed):
