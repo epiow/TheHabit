@@ -9,8 +9,11 @@ class Data():
         self.currentUser = None
         self.users = []
     def createUser(self, username, password):
-        new_user = User(username, password)
-        self.users.append(new_user)
+        if not self.findUser(username):
+            new_user = User(username, password)
+            self.users.append(new_user)
+            return True
+        return False
     def findUser(self, username):
         userFound = False
         for user in self.users:
