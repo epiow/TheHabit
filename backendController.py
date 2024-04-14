@@ -9,34 +9,30 @@ class Data():
         self.currentUser = None
         self.users = []
     def createUser(self, username, password):
-        if not self.findUser(username):
+        if self.findUser(username) is None:
             new_user = User(username, password)
             self.users.append(new_user)
             return True
         return False
     def findUser(self, username):
-        userFound = False
         for user in self.users:
             if user.username == username:
-                userFound = True
-                break
-        return userFound
+                return self.users.index(user)
+        return None
     def loginUser(self, username, password):
-        userFound = False
-        for user in self.users:
-            if user.username == username and user.password == password:
-                userFound = True
-                self.currentUser = self.users.index(user)
-                break
-        return userFound
-    def editUser(self, username="", password=""):
+        userToLogin = self.findUser(username)
+        if self.users[userToLogin].password is password:
+            self.currentUser = userToLogin
+            return True
+        return False
+    def editUser(self, username=None, password=None):
         usernameSet = False
         passwordSet = False
-        if not self.findUser(username):
-            if username is not "":
+        if self.findUser(username) is None:
+            if username is not None:
                 usernameSet = True
                 self.users[self.currentUser].username = username
-            if password is not "":
+            if password is not None:
                 passwordSet = True
                 self.users[self.currentUser].password = password
         return [usernameSet, passwordSet]
@@ -51,20 +47,26 @@ class User():
         self.currentActivity = None
         self.activities = []
     def createActivity(self, activity_name):
-        if not self.findActivity(activity_name):
+        if self.findActivity(activity_name) is None:
             new_activity = Activity(activity_name) 
             self.activities.append(new_activity)
+            return True
+        return False
     def findActivity(self, activity_name):
-        activityFound = False
         for activity in self.activities:
             if activity.activity_name == activity_name:
-                activityFound = True
-                break
-        return activityFound
-    def editActivity(self, activity_name=""):
+                return self.activities.index(activity)
+        return None
+    def setCurrentActivity(self, activity_name):
+        activityToSet = self.findActivity(activity_name)
+        if activityToSet is not None:
+            self.currentActivity = activityToSet
+            return True
+        return False
+    def editActivity(self, activity_name=None):
         nameSet = False
-        if not self.findActivity(activity_name):
-            if activity_name is not "":
+        if self.findActivity(activity_name) is None:
+            if activity_name is not None:
                 nameSet = True
                 self.activities[self.currentActivity].name = activity_name
         return nameSet
@@ -76,21 +78,46 @@ class User():
 class Activity():
     def __init__(self, activity_name):
         self.name = activity_name
+        self.currentEntry = None
         self.entries = []
     def createEntry(self, date_performed, time_set, time_elapsed, count):
-        new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
+        entryToIncrement = self.findEntry(date_performed)
+        if entryToIncrement is None:
+            new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
+            self.entries.append(new_entry)
+            return True
+        elif self.entryToIncrement.time_set is time_set:
+            self.findEntry[entryToIncrement].count = count + 1
+            return True
+        return False
+    def findEntry(self, date_performed):
         for entry in self.entries:
-            if(new_entry.date_performed == entry.date_performed):
-                return False
-        self.entries.append(new_entry)
-    #TO IMPLEMENT
-    def findEntry(self):
-        pass
-    def editEntry(self):
-        pass
+            if entry.date_performed == date_performed:
+                return self.entries.index(entry)
+        return None
+    def editEntry(self, date_performed=None, time_set=None, time_elapsed=None, count=None):
+        dateSet = False
+        timeSet = False
+        elapsedSet = False
+        countSet = False
+        if not self.findEntry(date_performed):
+            if date_performed is not None:
+                dateSet = True
+                self.entries[self.currentEntry].date_performed = date_performed
+            if time_set is not None:
+                timeSet = True
+                self.entries[self.currentEntry].time_set = time_set
+            if time_elapsed is not None:
+                elapsedSet = True
+                self.entries[self.currentEntry].time_elapsed = time_elapsed
+            if count is not None:
+                countSet = True
+                self.entries[self.currentEntry].count = count
+        return [dateSet, timeSet, elapsedSet, countSet]
+                
     def deleteEnty(self):
-        pass
-    #TO IMPLEMENT
+        del self.entries[self.currentEntry]
+        self.currentEntry = None
         
 class ActivityEntry():
     def __init__(self, date_performed, time_set, time_elapsed, count):
