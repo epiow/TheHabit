@@ -48,8 +48,29 @@ class User():
     def __init__(self, username, password):
         self.username = username
         self.password = password
+        self.currentActivity = None
         self.activities = []
-    def createActivity(activity_name):
+    def createActivity(self, activity_name):
+        if not self.findActivity(activity_name):
+            new_activity = Activity(activity_name) 
+            self.activities.append(new_activity)
+    def findActivity(self, activity_name):
+        activityFound = False
+        for activity in self.activities:
+            if activity.activity_name == activity_name:
+                activityFound = True
+                break
+        return activityFound
+    def editActivity(self, activity_name=""):
+        nameSet = False
+        if not self.findActivity(activity_name):
+            if activity_name is not "":
+                nameSet = True
+                self.activities[self.currentActivity].name = activity_name
+        return nameSet
+    def deleteCurrentActivity(self):
+        del self.activities[self.currentActivity]
+        self.currentActivity = None
         
 
 class Activity():
