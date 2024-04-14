@@ -3,35 +3,51 @@ import os
 import DataIO
 import Database
 import json
-
+class Data():
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.currentUser = None
+        self.users = []
+    def createUser(self, username, password):
+        new_user = User(username, password)
+        self.users.append(new_user)
+    def findUser(self, username):
+        userFound = False
+        for user in self.users:
+            if user.username == username:
+                userFound = True
+                break
+        return userFound
+    def loginUser(self, username, password):
+        userFound = False
+        for user in self.users:
+            if user.username == username and user.password == password:
+                userFound = True
+                self.currentUser = self.users.index(user)
+                break
+        return userFound
+    def editUser(self, username="", password=""):
+        usernameSet = False
+        passwordSet = False
+        if not self.findUser(username):
+            if username is not "":
+                usernameSet = True
+                self.users[self.currentUser].username = username
+            if password is not "":
+                passwordSet = True
+                self.users[self.currentUser].password = password
+        return [usernameSet, passwordSet]
+    def deleteCurrentUser(self):
+        del self.users[self.currentUser]
+        self.currentUser = None
+    
 class User():
     def __init__(self, username, password):
-        self.io = DataIO.DataIO('./JSON/data.json')
-        self.db = Database.Database(self.io)
         self.username = username
         self.password = password
         self.activities = []
-    def setActivities(self):
-        data = self.io.load_data()
-        for user in data:
-            if(self.username == user["username"]):
-                for activity in user["activities"]:
-                    activity_to_set = Activity(activity["name"])
-                    activity_to_set.setEntries(activity["times_performed"])
-                    self.activities.append(activity_to_set)
-                    
-    def loginUser(self):
-        data = self.io.load_data()
-        userExists = False
-        for user in data:
-            if self.username == user["username"] and self.password == user["password"]:
-                userExists = True
-                self.setActivities()
-                break
-        return userExists
-            
-    def registerUser(self):
-        return self.db.create_user(self.username, self.password)
+    def createActivity(activity_name):
+        
 
 class Activity():
     def __init__(self, activity_name):
@@ -54,10 +70,3 @@ class ActivityEntry():
         self.time_set = time_set
         self.time_elapsed = time_elapsed
         self.count = count
-
-user = User("yo", "yuh")
-user.loginUser()
-for i in user.activities:
-    print(i.name)
-    for j in i.entries:
-        print(j.date_performed)
