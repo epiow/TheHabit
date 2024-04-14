@@ -1,7 +1,7 @@
 import flet as ft
 import os
 
-def yo():
+def yo(e: ft.ContainerTapEvent):
     print("yo")
 def set_transparency(value: str, alpha):
     return ('#' + hex(int(alpha * 255)).lstrip("0x") + value.lstrip("#")).upper()
@@ -52,7 +52,7 @@ def login(page: ft.Page):
                                 content         = ft.Container(
                                                     ft.Text("Login", style=vars.default_text_style),
                                                     alignment=ft.alignment.center,
-                                                    padding=8
+                                                    padding=5.5
                                                 ),
                                 width           = vars.scale(154),
                                 height          = vars.scale(22),
@@ -146,6 +146,13 @@ def login(page: ft.Page):
                                     buttonLogin
                                 ],
                             )
-    page.add(stack)
+    page.window_title_bar_hidden = True
+    page.window_title_bar_buttons_hidden = False
+    page.add(
+        ft.Container(
+            stack,
+            padding = -15
+        )
+    )
 import os; print(os.getcwd())
 ft.app(target=login)
