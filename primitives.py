@@ -1,11 +1,6 @@
 import flet as ft
 import os
 
-def yo():
-    print("yo")
-def set_transparency(value: str, alpha):
-    return ('#' + hex(int(alpha * 255)).lstrip("0x") + value.lstrip("#")).upper()
-
 class UserColors:
     accent      = '#1BCF6E'
     background  = '#E5E5E5'
@@ -26,8 +21,11 @@ class UserProperties:
                         )
     def scale(self,value):
         return value * self.scale_factor
+    def set_transparency(value: str, alpha):
+        return ('#' + hex(int(alpha * 255)).lstrip("0x") + value.lstrip("#")).upper()
+
 def login(page: ft.Page):
-    print(set_transparency('#FFFFFF', 0.5))
+    print(vars.set_transparency('#FFFFFF', 0.5))
     vars                    = UserProperties()
     colors                  = UserColors()
     page.title              = "the Habit: Login"
@@ -59,7 +57,7 @@ def login(page: ft.Page):
                                 bgcolor         = colors.accent,
                                 border_radius   = vars.scale(4),
                                 ink             = True,
-                                on_click        = yo
+                                on_click        = 
                             )
     staticUsername          = ft.Text(
                                 "Username",
@@ -74,26 +72,26 @@ def login(page: ft.Page):
     editUsername            = ft.TextField(
                                 text_style      = vars.textfield_style,
                                 border          = ft.InputBorder.NONE,
-                                cursor_color    = set_transparency(colors.accent, 0.5),
+                                cursor_color    = vars.set_transparency(colors.accent, 0.5),
                                 cursor_height   = vars.scale(19),
                                 cursor_width    = 10,
                                 dense           = True,
                                 width           = vars.scale(242),
                                 height          = vars.scale(22),
-                                bgcolor         = set_transparency(colors.foreground, 0.05),
+                                bgcolor         = vars.set_transparency(colors.foreground, 0.05),
     )
     editPassword            = ft.TextField(
                                 password            = True,
                                 can_reveal_password = True,
                                 text_style          = vars.textfield_style,
                                 border              = ft.InputBorder.NONE,
-                                cursor_color        = set_transparency(colors.accent, 0.5),
+                                cursor_color        = vars.set_transparency(colors.accent, 0.5),
                                 cursor_height       = vars.scale(19),
                                 cursor_width        = 10,
                                 dense               = True,
                                 width               = vars.scale(242),
                                 height              = vars.scale(22),
-                                bgcolor             = set_transparency(colors.foreground, 0.05),
+                                bgcolor             = vars.set_transparency(colors.foreground, 0.05),
     )
 
     staticUsername              = ft.Container(
