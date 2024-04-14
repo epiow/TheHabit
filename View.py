@@ -1,173 +1,124 @@
 import flet as ft
-import json
-import Database
-from backendController import User
+import os
+from primitives import UserColors, UserProperties
 
-def login(page: ft.Page):
-    page.title = "Login Example"
-    page.window_width = 285*2
-    page.window_height = 319*2
-    page.bgcolor ="#E5E5E5"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.padding = 80
+def windowLogin(page: ft.Page):
+    vars                    = UserProperties()
+    colors                  = UserColors()
+    page.title              = "the Habit: Login"
+    page.window_width       = vars.scale(286)
+    page.window_height      = vars.scale(330)
+    page.bgcolor            = colors.background
+    page.window_resizable   = False
 
-    bg_img = ft.Image(
-        src='./Assets/logo-big-mono.svg',
-        width=100,
-        height=100,
-        fit=ft.ImageFit.CONTAIN
+    svgLogo                 = ft.Image(
+                                src     = os.path.join(os.getcwd(), "Assets/logo-big-full.svg"),
+                                fit     = ft.ImageFit.FILL,
+                                width   = vars.scale(198),
+                                height  = vars.scale(110),
+                            )
+    bgDots                  = ft.Image(
+                                src     = os.path.join(os.getcwd(), "Assets/dots.svg"),
+                                fit     = ft.ImageFit.FILL,
+                                width   = page.window_width,
+                                height  = page.window_height,
+                            )
+    buttonLogin             = ft.Container(
+                                content         = ft.Container(
+                                                    ft.Text("Login", style=vars.default_text_style),
+                                                    alignment=ft.alignment.center,
+                                                    padding=8
+                                                ),
+                                width           = vars.scale(154),
+                                height          = vars.scale(22),
+                                bgcolor         = colors.accent,
+                                border_radius   = vars.scale(4),
+                                ink             = True,
+                                on_click        = lambda e: print("test")
+                            )
+    staticUsername          = ft.Text(
+                                "Username",
+                                style   = vars.default_text_style,
+                                color   = colors.foreground,
+                            )
+    staticPassword          = ft.Text(
+                                "Password",
+                                style   = vars.default_text_style,
+                                color   = colors.foreground,
+                            )
+    editUsername            = ft.TextField(
+                                text_style      = vars.textfield_style,
+                                border          = ft.InputBorder.NONE,
+                                cursor_color    = vars.set_transparency(colors.accent, 0.5),
+                                cursor_height   = vars.scale(19),
+                                cursor_width    = 10,
+                                dense           = True,
+                                width           = vars.scale(242),
+                                height          = vars.scale(22),
+                                bgcolor         = vars.set_transparency(colors.foreground, 0.05),
     )
-    
-    def login_clicked(e):
-        user = User(username.value, password.value)
-        
-        if user.loginUser() == True:
-            dlg = ft.AlertDialog(
-                title=ft.Text("Login Successful"),
-                on_dismiss=lambda e: page.update(),
-            )
-        else:
-            dlg = ft.AlertDialog(
-                title=ft.Text("Login Failed"),
-                on_dismiss=lambda e: page.update(),
-            )
-
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
-    
-    username = ft.TextField(label="Username",color=ft.colors.BLACK)
-    password = ft.TextField(label="Password", password=True, color=ft.colors.BLACK)
-
-
-    
-    buttonLogin = ft.Container(
-            width= 266*2,
-            height= 22*2,
-            bgcolor= '#FF1bcf6e',
-            alignment = ft.alignment.center,
-            border_radius=4,
-            content= ft.Container(
-                padding=6,
-                content=ft.Text(
-                    'Login',
-                    font_family='Rockwell',
-                    color='#ffffff',
-                    weight='400',
-                    size=12*2,
-                )
-            ),
-            ink=True,
-            on_click=login_clicked,
-    )
-
-    page.add
-    (
-
-        ft.Container
-        (
-            ft.Column
-            (
-                [
-                    ft.Container(bg_img, alignment=ft.alignment.center),
-                    ft.Container(username),
-                    ft.Container(password),
-                    ft.Container(buttonLogin, alignment=ft.alignment.center),
-                ]
-            )
-        )
-    )
-    
-
-def registerWindow(page: ft.Page):
-
-    page.title = "Register"
-    page.bgcolor ="#E5E5E5"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.padding = 80
-
-    bg_img = ft.Image(
-        src=f"../Assets/logo-big-gray.svg",
-        width=100,
-        height=100,
-        fit=ft.ImageFit.CONTAIN,
-    )
-    
-    def register_clicked(e):
-        '''
-        if username not in user.json
-        register_new_user(username, password, file_path_user)
-
-        else:
-        print("Username already exists")
-        '''
-
-        try:
-            if username.value in json.load(open('./JSON/user.json')):
-                dlg = ft.AlertDialog(
-                    title=ft.Text("Username already Exists"),
-                    on_dismiss=lambda e: page.update(),
-                )
-            else:
-                Register.registerUser(username.value, password.value)
-                dlg = ft.AlertDialog(
-                    title=ft.Text("Registration Successful"),
-                    on_dismiss=lambda e: page.update(),
-                )
-        except Exception as e:
-            dlg = ft.AlertDialog(
-                title=ft.Text(f"An error occurred: {str(e)}"),
-                on_dismiss=lambda e: page.update(),
-            )
-
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
-    
-    username = ft.TextField(label="Username",color=ft.colors.BLACK)
-    password = ft.TextField(label="Password", password=True, color=ft.colors.BLACK)
-    confirm_password = ft.TextField(label="Confirm Password", password=True, color = ft.colors.BLACK)
-
-    
-    buttonLogin = ft.Container(
-            width= 180,
-            height= 50,
-            bgcolor= '#FF1bcf6e',
-            border_radius=4,
-            alignment = ft.alignment.center,
-            content= ft.Container(
-                padding=6,
-                content=ft.Text(
-                    'Create Account',
-                    font_family='Rockwell',
-                    color='#dadada',
-                    weight='400',
-                    size=12,
-                )
-            ),
-            ink=True,
-            on_click=register_clicked,
+    editPassword            = ft.TextField(
+                                password            = True,
+                                can_reveal_password = True,
+                                text_style          = vars.textfield_style,
+                                border              = ft.InputBorder.NONE,
+                                cursor_color        = vars.set_transparency(colors.accent, 0.5),
+                                cursor_height       = vars.scale(19),
+                                cursor_width        = 10,
+                                dense               = True,
+                                width               = vars.scale(242),
+                                height              = vars.scale(22),
+                                bgcolor             = vars.set_transparency(colors.foreground, 0.05),
     )
 
-    page.add(ft.Container(
-        ft.Column(
-            [
-                ft.Container(bg_img),
-                ft.Container(username),
-                ft.Container(password),
-                ft.Container(confirm_password),
-                ft.Container(buttonLogin),
-            ],
-            alignment=ft.alignment.center
-        ),
-        padding=20,
-    )
-    )
+    staticUsername              = ft.Container(
+                                    staticUsername,
+                                    padding = 8,
+                                    left    = vars.scale(22),
+                                    top     = vars.scale(154)
+                                )
+    staticPassword              = ft.Container(
+                                    staticPassword,
+                                    padding = 8,
+                                    left    = vars.scale(22),
+                                    top     = vars.scale(198)
+                                )
+    editUsername                = ft.Container(
+                                editUsername,
+                                left    = vars.scale(22),
+                                top     = vars.scale(176)
+                                )
+    editPassword                = ft.Container(
+                                    editPassword,
+                                    left    = vars.scale(22),
+                                    top     = vars.scale(220)
+                                )
+    buttonLogin             = ft.Container(
+                                buttonLogin,
+                                left    = vars.scale(66),
+                                top     = vars.scale(264)
+                            )
+    bgDots                  = ft.Container(
+                                bgDots,
+                                opacity = 0.2,
+                                left    = 0,
+                                top     = 0
 
-def habitWindow(page: ft.Page):
-
-    page.add(
-        ft.Column()
-    )
+                            )
+    svgLogo                 = ft.Container(
+                                svgLogo,
+                                left    =vars.scale(44),
+                                top     =vars.scale(44),
+                            )
+    stack                   = ft.Stack(
+                                [
+                                    bgDots,
+                                    svgLogo,
+                                    staticUsername,
+                                    staticPassword,
+                                    editUsername,
+                                    editPassword,
+                                    buttonLogin
+                                ],
+                            )
+    page.add(stack)
