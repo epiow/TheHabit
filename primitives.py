@@ -30,3 +30,12 @@ class UserProperties:
         return value * self.scale_factor
     def set_transparency(self, value: str, alpha: float):
         return ('#' + hex(int(alpha * 255)).lstrip("0x") + value.lstrip("#")).upper()
+class UserControls:
+    def Icon(src, fit, width, height):
+        return ft.Image(
+            src=src,
+            fit=fit,
+            width = width,
+            height= height
+        )
+    
