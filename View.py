@@ -233,3 +233,12 @@ def windowMain(page: ft.Page):
         alignment=ft.alignment.center_right
 
     )
+    def crosses(count):
+        items = []
+        offset = 0
+        for i in range(1, count + 1):
+            newToggleCross = toggleCross()
+            newToggleCross.left += vars.scale(offset)
+            items.append(newToggleCross)
+            offset += 22
+        return items
