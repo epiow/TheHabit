@@ -39,7 +39,7 @@ def windowLogin(page: ft.Page):
                                 bgcolor         = colors.accent,
                                 border_radius   = vars.scale(4),
                                 ink             = True,
-                                on_click        = lambda e: print("test")
+                                on_click        = lambda e: page.window_close()
                             )
     staticUsername          = ft.Text(
                                 "Username",
