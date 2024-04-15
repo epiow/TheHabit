@@ -23,7 +23,7 @@ def windowLogin(page: ft.Page):
                                 height  = vars.scale(110),
                             )
     bgDots                  = ft.Image(
-                                src     = os.path.join(os.getcwd(), "Assets", vars.dots),
+                                src     = os.path.join(os.getcwd(), "Assets", vars.dots_login),
                                 fit     = ft.ImageFit.FILL,
                                 width   = page.window_width,
                                 height  = page.window_height,
@@ -242,3 +242,16 @@ def windowMain(page: ft.Page):
             items.append(newToggleCross)
             offset += 22
         return items
+    listCrosses = crosses(14)
+    stack = ft.Stack(
+        [
+            bgDots,
+            buttonLeftArrow,
+            buttonRightArrow,
+            staticDatePicker,
+            staticWelcomeUser
+        ] + listCrosses
+    )
+    page.add(stack)
+
+ft.app(target=windowMain)
