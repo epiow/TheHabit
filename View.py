@@ -154,3 +154,29 @@ def windowMain(page: ft.Page):
         e.control.content.opacity = e.control.data
         e.control.update()
 
+    iconLeftArrow = lambda: ft.Image(
+        src=os.path.join(os.getcwd(), "Assets", 'icon-left-arrow-light.svg'),
+        fit = ft.ImageFit.FILL,
+        width=vars.scale(22),
+        height=vars.scale(22)
+    )
+    iconRightArrow = lambda: ft.Image(
+        src=os.path.join(os.getcwd(), "Assets", 'icon-right-arrow-light.svg'),
+        fit = ft.ImageFit.FILL,
+        width=vars.scale(22),
+        height=vars.scale(22)
+    )
+    iconCross = lambda: ft.Image(
+        src=os.path.join(os.getcwd(), "Assets", 'icon-cross-light.svg'),
+        fit=ft.ImageFit.FILL,
+        width = vars.scale(22),
+        height= vars.scale(22)
+    )
+    toggleCross = lambda: ft.Container(
+        iconCross(),
+        data=True,
+        left=vars.scale(154),
+        top=vars.scale(154),
+        on_hover=eventButtonOnHover,
+        on_click=eventButtonOnToggle
+    )
