@@ -154,6 +154,12 @@ def windowMain(page: ft.Page):
         e.control.content.opacity = e.control.data
         e.control.update()
 
+    bgDots = ft.Image(
+        src=os.path.join(os.getcwd(), "Assets", 'dots-main-light.svg'),
+        fit = ft.ImageFit.FILL,
+        width = page.window_width,
+        height = page.window_height
+    )
     iconLeftArrow = lambda: ft.Image(
         src=os.path.join(os.getcwd(), "Assets", 'icon-left-arrow-light.svg'),
         fit = ft.ImageFit.FILL,
@@ -172,6 +178,34 @@ def windowMain(page: ft.Page):
         width = vars.scale(22),
         height= vars.scale(22)
     )
+    staticDatePicker = ft.Text(
+        "2024, April",
+        style=vars.default_text_style,
+        color=colors.foreground
+    )
+    staticWelcomeUser = ft.Text(
+        "Welcome, User!",
+        style=vars.default_text_style,
+        color=colors.foreground
+    )
+    bgDots = ft.Container(
+        bgDots,
+        opacity = 0.2,
+        left=0,
+        top=0
+    )
+    buttonLeftArrow = ft.Container(
+        iconLeftArrow(),
+        left=vars.scale(308),
+        top=vars.scale(66),
+        on_hover=eventButtonOnHover,
+    )
+    buttonRightArrow = ft.Container(
+        iconRightArrow(),
+        left=vars.scale(440),
+        top=vars.scale(66),
+        on_hover=eventButtonOnHover,
+    )
     toggleCross = lambda: ft.Container(
         iconCross(),
         data=True,
@@ -179,4 +213,23 @@ def windowMain(page: ft.Page):
         top=vars.scale(154),
         on_hover=eventButtonOnHover,
         on_click=eventButtonOnToggle
+    )
+    staticDatePicker = ft.Container(
+        staticDatePicker,
+        padding=ft.padding.only(top=6),
+        width=vars.scale(110),
+        height=vars.scale(22),
+        left=vars.scale(330),
+        top=vars.scale(66),
+        alignment=ft.alignment.center
+    )
+    staticWelcomeUser = ft.Container(
+        staticWelcomeUser,
+        padding=ft.padding.only(right=6, top=6),
+        width=vars.scale(154),
+        height=vars.scale(22),
+        left=vars.scale(308),
+        top=vars.scale(44),
+        alignment=ft.alignment.center_right
+
     )
