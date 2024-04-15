@@ -9,8 +9,10 @@ class UserColorsDark:
     foreground  = '#E5E5E5'
     background  = '#1D2833'
 class UserProperties:
-    colors = UserColorsDark()
+    colors = UserColorsLight()
     scale_factor        = 2
+    default_top_left_margin = ft.margin.only(left=6, top=6)
+    default_top_left_padding = ft.padding.only(left=6, top=6)
     default_text_style  = ft.TextStyle(
                             font_family = 'Rockwell',
                             weight      = '400',
