@@ -9,7 +9,7 @@ class Data():
         self.currentUser = None
         self.users = []
     def createUser(self, username, password):
-        if self.findUser(username) is None:
+        if self.findUser(username) == None:
             new_user = User(username, password)
             self.users.append(new_user)
             return True
@@ -21,18 +21,18 @@ class Data():
         return None
     def loginUser(self, username, password):
         userToLogin = self.findUser(username)
-        if self.users[userToLogin].password is password:
+        if self.users[userToLogin].password == password:
             self.currentUser = userToLogin
             return True
         return False
     def editUser(self, username=None, password=None):
         usernameSet = False
         passwordSet = False
-        if self.findUser(username) is None:
-            if username is not None:
+        if self.findUser(username) == None:
+            if username != None:
                 usernameSet = True
                 self.users[self.currentUser].username = username
-            if password is not None:
+            if password != None:
                 passwordSet = True
                 self.users[self.currentUser].password = password
         return [usernameSet, passwordSet]
@@ -47,7 +47,7 @@ class User():
         self.currentActivity = None
         self.activities = []
     def createActivity(self, activity_name):
-        if self.findActivity(activity_name) is None:
+        if self.findActivity(activity_name) == None:
             new_activity = Activity(activity_name) 
             self.activities.append(new_activity)
             return True
@@ -59,14 +59,14 @@ class User():
         return None
     def setCurrentActivity(self, activity_name):
         activityToSet = self.findActivity(activity_name)
-        if activityToSet is not None:
+        if activityToSet != None:
             self.currentActivity = activityToSet
             return True
         return False
     def editActivity(self, activity_name=None):
         nameSet = False
-        if self.findActivity(activity_name) is None:
-            if activity_name is not None:
+        if self.findActivity(activity_name) == None:
+            if activity_name != None:
                 nameSet = True
                 self.activities[self.currentActivity].name = activity_name
         return nameSet
@@ -82,11 +82,11 @@ class Activity():
         self.entries = []
     def createEntry(self, date_performed, time_set, time_elapsed, count):
         entryToIncrement = self.findEntry(date_performed)
-        if entryToIncrement is None:
+        if entryToIncrement == None:
             new_entry = ActivityEntry(date_performed, time_set, time_elapsed, count)
             self.entries.append(new_entry)
             return True
-        elif self.entryToIncrement.time_set is time_set:
+        elif self.entryToIncrement.time_set == time_set:
             self.findEntry[entryToIncrement].count = count + 1
             return True
         return False
@@ -101,16 +101,16 @@ class Activity():
         elapsedSet = False
         countSet = False
         if not self.findEntry(date_performed):
-            if date_performed is not None:
+            if date_performed != None:
                 dateSet = True
                 self.entries[self.currentEntry].date_performed = date_performed
-            if time_set is not None:
+            if time_set != None:
                 timeSet = True
                 self.entries[self.currentEntry].time_set = time_set
-            if time_elapsed is not None:
+            if time_elapsed != None:
                 elapsedSet = True
                 self.entries[self.currentEntry].time_elapsed = time_elapsed
-            if count is not None:
+            if count != None:
                 countSet = True
                 self.entries[self.currentEntry].count = count
         return [dateSet, timeSet, elapsedSet, countSet]
