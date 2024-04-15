@@ -75,18 +75,23 @@ def windowLogin(page: ft.Page):
                                 height              = vars.scale(22),
                                 bgcolor             = vars.set_transparency(colors.foreground, 0.05),
     )
-
     staticUsername          = ft.Container(
                                 staticUsername,
-                                padding = 8,
-                                left    = vars.scale(22),
-                                top     = vars.scale(154)
+                                padding     = vars.default_top_left_padding,
+                                width       = vars.scale(242),
+                                height      = vars.scale(22),
+                                left        = vars.scale(22),
+                                top         = vars.scale(154),
+                                alignment   = ft.alignment.center_left,
                             )
     staticPassword          = ft.Container(
                                 staticPassword,
-                                padding = 8,
-                                left    = vars.scale(22),
-                                top     = vars.scale(198)
+                                padding     = vars.default_top_left_padding,
+                                width       = vars.scale(242),
+                                height      = vars.scale(22),
+                                left        = vars.scale(22),
+                                top         = vars.scale(198),
+                                alignment   = ft.alignment.center_left
                             )
     editUsername            = ft.Container(
                                 editUsername,
