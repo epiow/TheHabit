@@ -146,3 +146,11 @@ def windowMain(page: ft.Page):
         page.window_title_bar_hidden = False
     page.window_title_bar_buttons_hidden = False
 
+    def eventButtonOnHover(e):
+        e.control.bgcolor = vars.set_transparency(colors.foreground, 0.1) if e.data == "true" else None
+        e.control.update()
+    def eventButtonOnToggle(e):
+        e.control.data = not e.control.data
+        e.control.content.opacity = e.control.data
+        e.control.update()
+
