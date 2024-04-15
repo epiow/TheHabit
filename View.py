@@ -131,3 +131,18 @@ def windowLogin(page: ft.Page):
                                 ],
                             )
     page.add(stack)
+
+def windowMain(page: ft.Page):
+    vars = UserProperties()
+    colors = vars.colors
+
+    page.title              = "the Habit: Login"
+    page.window_width       = vars.scale(484)
+    page.window_height      = vars.scale(396)
+    page.bgcolor            = colors.background
+    page.window_resizable   = False
+
+    if page.platform is ft.PagePlatform.MACOS:
+        page.window_title_bar_hidden = False
+    page.window_title_bar_buttons_hidden = False
+
