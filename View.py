@@ -1,10 +1,12 @@
 import flet as ft
 import os
-from primitives import UserColorsLight, UserColorsDark, UserProperties
+from primitives import UserProperties
+
 
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
-    colors                  = UserColorsDark()
+    colors                  = vars.colors
+
     page.title              = "the Habit: Login"
     page.window_width       = vars.scale(286)
     page.window_height      = vars.scale(330)
