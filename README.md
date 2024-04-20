@@ -10,7 +10,7 @@ pip install flet
 ```
 
 ## Main Program:
-In order to run the program, the following code must be run in main.py. \
+In order to run the program, the following code must be run in main.py. 
 ```py
-flet run
+flet run main.py
 ```
