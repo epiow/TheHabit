@@ -3,3 +3,6 @@
 **/JSON/*
 **/*.pyc
 .venv/*
+*.json
+*pyrebase_testing.py
+*config.py

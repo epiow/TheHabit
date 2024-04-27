@@ -1,15 +1,18 @@
 import flet as ft
 import os
 from primitives import UserColorsLight, UserColorsDark, UserProperties
+from pyrebase_testing import Authentication
 
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
     colors                  = UserColorsDark()
-    page.title              = "the Habit: Login"
+    page.title              = "The Habit"
     page.window_width       = vars.scale(286)
     page.window_height      = vars.scale(330)
     page.bgcolor            = colors.background
     page.window_resizable   = False
+    page.window_frameless   = True
+    page.window_center()
     print(os.path.join(os.getcwd(), "Assets", vars.logo_big_full))
     svgLogo                 = ft.Image(
                                 src     = os.path.join(os.getcwd(), "Assets", vars.logo_big_full),
@@ -34,7 +37,7 @@ def windowLogin(page: ft.Page):
                                 bgcolor         = colors.accent,
                                 border_radius   = vars.scale(4),
                                 ink             = True,
-                                on_click        = lambda e: print("test")
+                                on_click        = print('test')#Authentication.sign_up(staticUsername, staticPassword)
                             )
     staticUsername          = ft.Text(
                                 "Username",
@@ -121,3 +124,15 @@ def windowLogin(page: ft.Page):
                                 ],
                             )
     page.add(stack)
+
+def MainDashboard(Page: ft.Page):
+    vars                    = UserProperties()
+    colors                  = UserColorsDark()
+    Page.title              = "The Habit"
+    Page.window_width       = vars.scale(286)
+    Page.window_height      = vars.scale(330)
+    Page.bgcolor            = colors.background
+    Page.window_resizable   = False
+    Page.window_frameless   = True
+    Page.window_center()
+    pass
