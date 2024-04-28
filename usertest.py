@@ -1,8 +1,8 @@
-from backendController import *
-
+from Model.modelClassData import *
+from Model.modelClassActivity import *
 db: Data = Data('./JSON/data.json')
 print(db.createUser('yo', 'yuh'))
-print(db.createUser('Nhi', 'Gyro'))
+print(db.createUser('Knee', 'Guard'))
 print(db.loginUser('yo', 'yuh'))
 print(db.deleteCurrentUser())
 print(db.loginUser('yo', 'yuh'))
@@ -13,8 +13,13 @@ activity: Activity = user.setCurrentActivity('Jogging')
 activity.createEntry('2022/04/18', 3600, 1700, 1)
 activity.createEntry('2022/04/18', 3600, 1700, 1)
 activity.createEntry('2022/04/18', 3600, 1700, 1)
+entry: Entry = activity.setCurrentEntry('2022/04/18')
 print(activity.entries[activity.findEntry('2022/04/18')].count)
-
+print("Username: ", user.username)
+print("Activities:")
+for activity in user.activities:
+    print(activity.activity_name)
+    print()
 '''
 db.createActivity('yo', 'Skating', 3700, 1000)
 db.createActivity('yo', 'Parkouring', 3700, 1000)

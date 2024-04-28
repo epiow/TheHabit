@@ -6,7 +6,8 @@ import datetime
 import calendar
 from calendar import HTMLCalendar
 from dateutil import relativedelta
-
+from View.viewWindowLogin import *
+from View.viewWindowMain import *
 database = db.Database('./JSON/data.json')
 
 class FletCalendar(ft.UserControl):
@@ -109,7 +110,6 @@ def calendarWindow(page: ft.Page):
         )
     )
 
-
 if __name__ == "__main__":
-    ft.app(target=View.windowLogin)    
-    #ft.app(target=View.login)
+    ft.app(target=windowLogin)    
+    ft.app(target=windowMain)
