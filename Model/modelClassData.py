@@ -1,4 +1,4 @@
-from modelClassUser import User
+from Model.modelClassUser import User
 class Data():
     def __init__(self, file_path):
         self.file_path = file_path

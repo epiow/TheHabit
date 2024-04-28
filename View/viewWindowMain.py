@@ -1,4 +1,4 @@
-from viewProperties import *
+from View.viewProperties import *
 from Controller.controllerWindowMainEvents import *
 def windowMain(page: ft.Page):
     vars = UserProperties()
@@ -63,6 +63,7 @@ def windowMain(page: ft.Page):
         iconRightArrow(),
         left=vars.scale(440),
         top=vars.scale(66),
+        data=page,
         on_hover=eventButtonOnHover,
     )
     toggleCross = lambda: ft.Container(
@@ -112,5 +113,3 @@ def windowMain(page: ft.Page):
         ] + listCrosses
     )
     page.add(stack)
-
-ft.app(target=windowMain)

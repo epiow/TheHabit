@@ -1,5 +1,5 @@
-from viewProperties import *
-from Controller import controllerWindowLoginEvents
+from View.viewProperties import *
+from Controller.controllerWindowLoginEvents import *
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
     colors                  = vars.colors
@@ -36,7 +36,8 @@ def windowLogin(page: ft.Page):
                                 bgcolor         = colors.accent,
                                 border_radius   = vars.scale(4),
                                 ink             = True,
-                                on_click        = lambda e: page.window_close()
+                                data            = page,
+                                on_click        = eventButtonLoginClick
                             )
     staticUsername          = ft.Text(
                                 "Username",

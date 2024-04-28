@@ -1,4 +1,4 @@
-from modelClassActivity import Activity
+from Model.modelClassActivity import Activity
 class User():
     def __init__(self, username, password):
         self.username = username
