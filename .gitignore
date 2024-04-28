@@ -4,4 +4,4 @@
 **/*.pyc
 .venv/*
 *.json
-*.config.py
+*config.py
