@@ -10,8 +10,9 @@ def windowMain(page: ft.Page):
     page.bgcolor            = colors.background
     page.window_resizable   = False
     
-    if page.platform is ft.PagePlatform.MACOS:
-        page.window_title_bar_hidden = False
+    
+    #if page.platform is ft.PagePlatform.MACOS:
+    #   page.window_title_bar_hidden = False
     page.window_title_bar_buttons_hidden = False
     bgDots = ft.Image(
         src=os.path.join(os.getcwd(), "Assets", 'dots-main-light.svg'),
@@ -112,4 +113,5 @@ def windowMain(page: ft.Page):
             staticWelcomeUser
         ] + listCrosses
     )
-    page.add(stack)
+    return stack
+    #page.add(stack)
