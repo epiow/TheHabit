@@ -2,7 +2,7 @@ import pyrebase
 from datetime import datetime
 from config import config_keys as keys
 
-class Database:
+class Firebase:
     def __init__(self):
         self.firebase = pyrebase.initialize_app(keys)
         self.auth = self.firebase.auth()

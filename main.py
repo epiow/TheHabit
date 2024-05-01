@@ -8,13 +8,7 @@ def main(page: ft.Page):
     def route_change(route):
         page.views.clear()
         page.views.append(
-            ft.View(
-                "/login",
-                [
-                    ft.AppBar(title=ft.Text("Flet app"), bgcolor=ft.colors.SURFACE_VARIANT),
-                    ft.ElevatedButton("Visit Store", on_click=lambda _: page.go("/main")),
-                ],
-            )
+            ft.View(controls=windowLogin(page))
         )
         if page.route == "/main":
             page.views.append(
@@ -26,7 +20,6 @@ def main(page: ft.Page):
                     ],
                 )
             )
-        page.update()
 
     def view_pop(view):
         page.views.pop()
