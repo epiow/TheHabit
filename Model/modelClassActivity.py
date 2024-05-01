@@ -1,9 +1,9 @@
 from Model.modelClassEntry import Entry
 class Activity():
     def __init__(self, activity_name):
-        self.activity_name = activity_name
-        self.currentEntry = None
-        self.entries = []
+        self.activity_name: str = activity_name
+        self.currentEntry: int = None
+        self.entries: list[Entry] = []
     def createEntry(self, date_performed, time_set, time_elapsed, count):
         entryToIncrement = self.findEntry(date_performed)
         if entryToIncrement == None:

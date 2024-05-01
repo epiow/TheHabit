@@ -14,6 +14,8 @@ def windowMain(page: ft.Page):
     #if page.platform is ft.PagePlatform.MACOS:
     #   page.window_title_bar_hidden = False
     page.window_title_bar_buttons_hidden = False
+
+
     bgDots = ft.Image(
         src=os.path.join(os.getcwd(), "Assets", 'dots-main-light.svg'),
         fit = ft.ImageFit.FILL,
