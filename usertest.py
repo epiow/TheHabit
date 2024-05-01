@@ -19,7 +19,6 @@ def main():
     # Authenticate the user
     user = db.login_user(user_email, user_password)
     if user:
-        local_user = User(user_email, user_password)
         print("User authentication successful")
 
         user_uid = user['localId'] 
