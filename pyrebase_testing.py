@@ -34,17 +34,21 @@ class Database:
             self.db.child("users").child(user_id).update(data)
 
     def create_activity(self, user_uid, activity_name, time_set, time_elapsed):
-        if self.user:
-            today_date = datetime.today().strftime('%Y/%m/%d')
-            data = {
-                "time_set": time_set,
-                "time_elapsed": time_elapsed,
-                "count": 1
-            }
-            self.db.child("users").child(user_uid).child("activities").child(activity_name).child(today_date).set(data)
+        today_date = datetime.today()
+        year = today_date.year
+        month = today_date.month
+        day = today_date.day
+        
+        data = {
+            "time_set": time_set,
+            "time_elapsed": time_elapsed,
+            "count": 1  
+        }
+        
+        print(self.db.child("test").set(user_uid))
 
     def read_activity(self, user_uid):
-            activities = self.db.child("users").child(user_uid).child("activities").get()
+            activities = self.db.child("users").child(user_uid).get()
             return activities.val()
 
     def update_activity(self, activity_name, date_performed, time_set, time_elapsed):
