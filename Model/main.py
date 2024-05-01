@@ -1,18 +1,20 @@
 from modelClassData import *
-#TESTING PART ON THIS POINT
+
+# TESTING PART ON THIS POINT
 def main():
     database = Data()
-    data = Data("file_path", database)
 
     username = "epiow@gmail.com"
     password = "password123"
 
-    user = data.loginUser(username, password)
+    user = database.loginUser(username, password)  # Use 'database' instead of 'data'
     if user:
         print("User authentication successful!")
         print("Username:", user.username)
         print("Password:", user.password)
         
+        database.parse_user_data()
+        '''
         for activity in user.activities:
             print("\nActivity:", activity.activity_name)
             print("Entries:")
@@ -34,7 +36,7 @@ def main():
                         print("Day:")
                         for activity in day.activities:
                             print("- Activity:", activity.activity_name)
-
+        '''
     else:
         print("User authentication failed.")
 
