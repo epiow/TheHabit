@@ -1,16 +1,9 @@
-from View.viewProperties import *
-from View.viewWindowMain import *
+import flet as ft
 
 
 def eventButtonLoginClick(e: ft.ControlEvent):
-    page: ft.Page = e.page
-    vars: UserProperties = page.data
-    colors = vars.colors
-    test = windowMain(page)
-    view = ft.View(controls=[test.stack], bgcolor=colors.background)
-    page.views.clear()
-    page.views.append(view)
-    page.update()
-
+    f: ft.Page = e.control.data
+    f.window_close()
+    
 def eventButtonLoginHover(e):
     pass
