@@ -10,8 +10,8 @@ def windowLogin(page: ft.Page):
     page.bgcolor            = colors.background
     page.window_resizable   = False
 
-    if page.platform is ft.PagePlatform.MACOS:
-        page.window_title_bar_hidden = True
+    #if page.platform is ft.PagePlatform.MACOS:
+    #    page.window_title_bar_hidden = True
 
     svgLogo                 = ft.Image(
                                 src     = os.path.join(os.getcwd(), "Assets", vars.logo_big_full),
@@ -129,4 +129,5 @@ def windowLogin(page: ft.Page):
                                     buttonLogin
                                 ],
                             )
-    page.add(stack)
+    return stack
+    #page.add(stack)
