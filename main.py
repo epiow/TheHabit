@@ -3,7 +3,6 @@ from View.viewWindowLogin import *
 from View.viewProperties import *
 from View.viewWindowMain import *
 def main(page: ft.Page):
-<<<<<<< HEAD
     page.data = UserProperties()
     test = windowLogin(page)
     view = ft.View('login', controls=[test.stack], bgcolor='#FFe5e5e5')
