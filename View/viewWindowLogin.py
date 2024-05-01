@@ -1,5 +1,6 @@
 from View.viewProperties import *
 from Controller.controllerWindowLoginEvents import *
+
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
     colors                  = vars.colors

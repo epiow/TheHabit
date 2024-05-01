@@ -3,7 +3,7 @@ class Data():
     def __init__(self, file_path):
         self.file_path = file_path
         self.currentUser = None
-        self.users = []
+        self.users: list[User] = []
     def createUser(self, username, password):
         if self.findUser(username) == None:
             new_user = User(username, password)
