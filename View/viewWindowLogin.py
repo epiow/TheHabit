@@ -1,6 +1,5 @@
 from View.viewProperties import *
 from Controller.controllerWindowLoginEvents import *
-
 def windowLogin(page: ft.Page):
     vars                    = UserProperties()
     colors                  = vars.colors
@@ -11,9 +10,9 @@ def windowLogin(page: ft.Page):
     page.bgcolor            = colors.background
     page.window_resizable   = False
 
-    #if page.platform is ft.PagePlatform.MACOS:
-    #    page.window_title_bar_hidden = True
-
+    def route_change(route):
+        page.views.clear()
+    
     svgLogo                 = ft.Image(
                                 src     = os.path.join(os.getcwd(), "Assets", vars.logo_big_full),
                                 fit     = ft.ImageFit.FILL,
@@ -38,7 +37,7 @@ def windowLogin(page: ft.Page):
                                 border_radius   = vars.scale(4),
                                 ink             = True,
                                 data            = page,
-                                on_click        = eventButtonLoginClick
+                                on_click        = lambda e: page.views.clear()
                             )
     staticUsername          = ft.Text(
                                 "Username",
@@ -116,8 +115,8 @@ def windowLogin(page: ft.Page):
                             )
     svgLogo                 = ft.Container(
                                 svgLogo,
-                                left    =vars.scale(44),
-                                top     =vars.scale(44),
+                                left    = vars.scale(44),
+                                top     = vars.scale(44),
                             )
     stack                   = ft.Stack(
                                 [
@@ -130,5 +129,4 @@ def windowLogin(page: ft.Page):
                                     buttonLogin
                                 ],
                             )
-    return stack
-    #page.add(stack)
+    return ft.View(route='login', controls=[stack])
