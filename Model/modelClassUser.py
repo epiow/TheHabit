@@ -1,11 +1,13 @@
-from modelClassActivity import Activity
+from Model.modelClassActivity import Activity
 class User():
-    def __init__(self, username, password):
-        self.username: str = username
+    def __init__(self, email, token_id, username, password):
+        self.email: str = email
+        self.token_id: str = token_id
+        self.username: str | None = username
         self.password: str = password
         self.currentActivity: int = None
         self.activities: list[Activity] = []
-        
+         
     def createActivity(self, activity_name):
         if self.findActivity(activity_name) == None:
             new_activity = Activity(activity_name) 
