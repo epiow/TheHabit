@@ -264,4 +264,4 @@ def windowMain(page: ft.Page):
     )
     page.add(stack)
 
-#ft.app(target=windowLogin)
+ft.app(target=windowLogin)
