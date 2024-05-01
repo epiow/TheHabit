@@ -2,13 +2,14 @@ import pyrebase
 from datetime import datetime
 from config import config_keys as keys
 
-class Database:
+class Firebase:
     def __init__(self):
         self.firebase = pyrebase.initialize_app(keys)
         self.auth = self.firebase.auth()
         self.db = self.firebase.database()
         self.is_authenticated = False
         self.user = None
+
     def login_user(self, username, password):
         try:
             user = self.auth.sign_in_with_email_and_password(username, password)
@@ -27,6 +28,7 @@ class Database:
             return False
 
     def set_name(self, name):
+        if self.user:
             user_id = self.user['uid']
             data = {"name": name}
             self.db.child("users").child(user_id).update(data)
@@ -43,14 +45,14 @@ class Database:
             "count": 1  
         }
         
-        self.db.child("users").child(user_uid).child("activities").child(activity_name).child("date").child(str(year)).child("months").child(str(month)).child("days").child(str(day)).child("entry").push(data)
-
+        print(self.db.child("test").set(user_uid))
 
     def read_activity(self, user_uid):
-            activities = self.db.child("users").child(user_uid).child("activities").get()
+            activities = self.db.child("users").child(user_uid).get()
             return activities.val()
 
     def update_activity(self, activity_name, date_performed, time_set, time_elapsed):
+        if self.user:
             user_id = self.user['uid']
             data = {
                 "time_set": time_set,
@@ -59,39 +61,6 @@ class Database:
             self.db.child("users").child(user_id).child("activities").child(activity_name).child(date_performed).update(data)
 
     def delete_activity(self, activity_name, date_performed):
+        if self.user:
             user_id = self.user['uid']
             self.db.child("users").child(user_id).child("activities").child(activity_name).child(date_performed).remove()
-
-
-class Calendar:
-    def __init__(self, database):
-        self.db = database
-
-    def add_event(self, user_uid, event_name, event_date):
-        pass
-
-    def update_event(self, user_uid, event_name, new_event_date):
-        pass
-
-    def delete_event(self, user_uid, event_name):
-        pass
-
-class Timer:
-    def start_timer(self):
-        pass
-
-    def pause_timer(self):
-        pass
-
-    def stop_timer(self):
-        pass
-
-class Notes:
-    def add_note(self, user_uid, note_text):
-        pass
-
-    def update_note(self, user_uid, note_id, new_note_text):
-        pass
-
-    def delete_note(self, user_uid, note_id):
-        pass

@@ -1,26 +1,31 @@
 from pyrebase import pyrebase # Import pyrebase module for Firebase integration
-from pyrebase_testing import Database
+from Model.modelFirebaseToPython import *
 from datetime import datetime  # Import datetime module for date and time operations
 from config import config_keys
 
+import json
+from Model.modelClassData import *
 firebase = pyrebase.initialize_app(config_keys)
 
 # Firebase database instance
-db = Database()
-
+db = Firebase()
+local_user: User = 0
 def main():
     # Replace with actual email and password
-    user_email = "epiow@gmail.com"    
-    user_password = "password123"
 
+    user_email = "mega@megaa.moe"
+    user_password = "Pass123."
+    
     # Authenticate the user
     user = db.login_user(user_email, user_password)
     if user:
+        local_user = User(user_email, user_password)
         print("User authentication successful")
+
         user_uid = user['localId'] 
-
-        print(db.read_activity(user_uid))
-
+        test: dict = db.read_activity(user_uid)
+        print(json.dumps(test, indent=4, sort_keys=True))
+        
         # Test activity creation
         print("\nTesting activity creation...")
         activity_name = input("Enter the activity name: ")
