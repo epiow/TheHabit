@@ -1,6 +1,7 @@
 from View.viewProperties import *
 from View.viewWindowMain import *
 from Model.modelClassData import *
+from Model.modelClassData import *
 
 #user = User("", "")
 
