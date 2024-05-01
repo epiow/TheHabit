@@ -4,6 +4,7 @@ class Activity():
         self.activity_name: str = activity_name
         self.currentEntry: int = None
         self.entries: list[Entry] = []
+
     def createEntry(self, date_performed, time_set, time_elapsed, count):
         entryToIncrement = self.findEntry(date_performed)
         if entryToIncrement == None:
@@ -14,17 +15,20 @@ class Activity():
             self.entries[entryToIncrement].count += 1
             return True
         return False
+    
     def findEntry(self, date_performed):
         for entry in self.entries:
             if entry.date_performed == date_performed:
                 return self.entries.index(entry)
         return None
+    
     def setCurrentEntry(self, date_performed):
         entryToSet = self.findEntry(date_performed)
         if entryToSet != None:
             self.currentEntry = entryToSet
             return self.entries[self.currentEntry]
         return None
+    
     def editEntry(self, date_performed=None, time_set=None, time_elapsed=None, count=None):
         dateSet = False
         timeSet = False

@@ -112,4 +112,4 @@ def calendarWindow(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(target=windowLogin)    
-    ft.app(target=windowMain)
+    #ft.app(target=windowMain)
