@@ -2,6 +2,7 @@ from View.viewProperties import *
 
 class windowMain:
     def __init__(self, page):  # Accept username as an argument
+        from Controller.controllerWindowMainEvents import eventToggleCrossOnClick, eventButtonOnHover
         vars = UserProperties()
         colors = vars.colors
         page.title = "the Habit: Login"
@@ -10,7 +11,6 @@ class windowMain:
         page.bgcolor = colors.background
         page.window_resizable = False
         page.window_title_bar_buttons_hidden = False
-        self.username= username
 
         bgDots = ft.Image(
             src=os.path.join(os.getcwd(), "Assets", 'dots-main-light.svg'),
@@ -46,8 +46,9 @@ class windowMain:
             color=colors.foreground
         )
 
+
         staticWelcomeUser = ft.Text(
-            "Welcome, !",  # Set the username dynamically
+            f"Welcome, {page.data[0].currentUser.username}!",  # Set the username dynamically
             style=vars.default_text_style,
             color=colors.foreground
         )
@@ -77,6 +78,8 @@ class windowMain:
             data=True,
             left=vars.scale(154),
             top=vars.scale(154),
+            on_click=eventToggleCrossOnClick,
+            on_hover=eventButtonOnHover
         )
 
         staticDatePicker = ft.Container(

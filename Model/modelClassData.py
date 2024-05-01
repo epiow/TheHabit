@@ -46,20 +46,32 @@ class Data:
             print("Error")
             return False
     
-    def findUser(self, username):
-        for user in self.users:
-            if user.username == username:
-                return self.users.index(user)
-        return None
-    
-    def loginUser(self, username, password):
-        new_activity = Activity(db.activity_name, db.activity)
-        userToLogin = self.findUser(username)
-        if userToLogin != None:
-            if self.users[userToLogin].password == password:
-                self.currentUser = userToLogin
-                return self.users[self.currentUser]
-        return None
+    def loginUser(self, email, password):
+        from requests.exceptions import HTTPError
+        try:
+            toLogin = self.auth.sign_in_with_email_and_password(email, password)
+            self.currentUser = User(email, toLogin['localId'], toLogin['displayName'], password)
+            return toLogin
+        except HTTPError as e:
+            print(f"Error authenticating user: {e.errno}")
+            return None
+
+
+    def parse_calendar_data(self, calendar_data):
+        calendar = Calendar()
+        for year_key, year_data in calendar_data.items():
+            year = Year()
+            for month_key, month_data in year_data.items():
+                month = Month()
+                for day_key, day_data in month_data.items():
+                    day = Day()
+                    for activity_key, activity_data in day_data.items():
+                        activity = Activity(activity_key)
+                        day.activities.append(activity)
+                    month.weeks.append(day)
+                year.months.append(month)
+            calendar.years.append(year)
+        return calendar
     
     def editUser(self, username=None, password=None):
         if self.currentUser is not None:
@@ -72,8 +84,13 @@ class Data:
         return [False, False]
 
     def deleteCurrentUser(self):
-        del self.users[self.currentUser]
-        self.currentUser = None
-        return True
-    
-
+        if self.currentUser is not None:
+            try:
+                self.auth.delete_user(self.currentUser.email, self.currentUser.password)
+                self.db.child("users").child(self.currentUser.username).remove()
+                self.users.remove(self.currentUser)
+                self.currentUser = None
+                return True
+            except Exception as e:
+                print(f"Error deleting user: {e}")
+                return False

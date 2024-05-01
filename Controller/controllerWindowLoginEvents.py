@@ -2,18 +2,19 @@ from View.viewProperties import *
 from View.viewWindowMain import *
 from Model.modelClassData import *
 
-user = User("", "")
+#user = User("", "")
 
 def eventButtonLoginClick(e: ft.ControlEvent):
     currentUsername = e.control.data[0].value
     currentPassword = e.control.data[1].value
 
-    currentUserController = Data()
+    page: ft.Page = e.page
+    vars: UserProperties = page.data[1]
+    colors = vars.colors
+
+    currentUserController = page.data[0]
+    
     if(currentUserController.loginUser(currentUsername, currentPassword) != None):
-        user = currentUserController.currentUser()
-        page: ft.Page = e.page
-        vars: UserProperties = page.data
-        colors = vars.colors
         test = windowMain(page)
         print(currentUserController.currentUser.username)
         view = ft.View(controls=[test.stack], bgcolor=colors.background)
