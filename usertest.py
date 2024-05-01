@@ -37,11 +37,9 @@ def create_activity(user_id, activity_name, time_set, time_elapsed):
 
 def main():
     # Replace with actual email and password
-    db1 = Database()
     user_email = input("Create your email: ")
     user_password = input("Create your password: ")
 
-    db1.create_user(user_email, user_password)
 
     # Authenticate the user
     try:
@@ -55,8 +53,8 @@ def main():
     # Test activity creation
     print("\nTesting activity creation...")
     activity_name = input("Enter the activity name: ")
-    time_set = ("Enter time of activity: ")
-    time_elapsed = ("Enter duration of activity: ")
+    time_set = input("Enter time of activity: ")
+    time_elapsed = input("Enter duration of activity: ")
 
     # Use the user_id for activity creation
     create_activity(user_id, activity_name, time_set, time_elapsed)
