@@ -28,27 +28,30 @@ class Database:
             return False
 
     def set_name(self, name):
-        if self.user:
             user_id = self.user['uid']
             data = {"name": name}
             self.db.child("users").child(user_id).update(data)
 
     def create_activity(self, user_uid, activity_name, time_set, time_elapsed):
-        if self.user:
-            today_date = datetime.today().strftime('%Y/%m/%d')
-            data = {
-                "time_set": time_set,
-                "time_elapsed": time_elapsed,
-                "count": 1
-            }
-            self.db.child("users").child(user_uid).child("activities").child(activity_name).child(today_date).set(data)
+        today_date = datetime.today()
+        year = today_date.year
+        month = today_date.month
+        day = today_date.day
+        
+        data = {
+            "time_set": time_set,
+            "time_elapsed": time_elapsed,
+            "count": 1  
+        }
+        
+        self.db.child("users").child(user_uid).child("activities").child(activity_name).child("date").child(str(year)).child("months").child(str(month)).child("days").child(str(day)).push(data)
+
 
     def read_activity(self, user_uid):
             activities = self.db.child("users").child(user_uid).child("activities").get()
             return activities.val()
 
     def update_activity(self, activity_name, date_performed, time_set, time_elapsed):
-        if self.user:
             user_id = self.user['uid']
             data = {
                 "time_set": time_set,
@@ -57,6 +60,39 @@ class Database:
             self.db.child("users").child(user_id).child("activities").child(activity_name).child(date_performed).update(data)
 
     def delete_activity(self, activity_name, date_performed):
-        if self.user:
             user_id = self.user['uid']
             self.db.child("users").child(user_id).child("activities").child(activity_name).child(date_performed).remove()
+
+
+class Calendar:
+    def __init__(self, database):
+        self.db = database
+
+    def add_event(self, user_uid, event_name, event_date):
+        pass
+
+    def update_event(self, user_uid, event_name, new_event_date):
+        pass
+
+    def delete_event(self, user_uid, event_name):
+        pass
+
+class Timer:
+    def start_timer(self):
+        pass
+
+    def pause_timer(self):
+        pass
+
+    def stop_timer(self):
+        pass
+
+class Notes:
+    def add_note(self, user_uid, note_text):
+        pass
+
+    def update_note(self, user_uid, note_id, new_note_text):
+        pass
+
+    def delete_note(self, user_uid, note_id):
+        pass
