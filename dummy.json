@@ -1,0 +1,76 @@
+{
+    "users": {
+        "rqnhk3yz9QgAkI5lGG2zQaHYyMA3": {
+            "activities": {
+                "activity1": {
+                    "entries": {
+                        "entry1": {
+                            "date_performed": "2024-04-30",
+                            "count": "10",
+                            "time_set": "10:00 AM",
+                            "time_elapsed": "1 hour"
+                        },
+                        "entry2": {
+                            "date_performed": "2024-04-29",
+                            "count": "15",
+                            "time_set": "11:30 AM",
+                            "time_elapsed": "45 minutes"
+                        }
+                    }
+                },
+                "activity2": {
+                    "entries": {
+                        "entry1": {
+                            "date_performed": "2024-04-30",
+                            "count": "5",
+                            "time_set": "9:00 AM",
+                            "time_elapsed": "30 minutes"
+                        },
+                        "entry2": {
+                            "date_performed": "2024-04-29",
+                            "count": "8",
+                            "time_set": "10:45 AM",
+                            "time_elapsed": "20 minutes"
+                        }
+                    }
+                }
+            }
+        },
+        "SZKTjVuknvd0KwjMIKkZQ37ywzt1": {
+            "activities": {
+                "activity1": {
+                    "entries": {
+                        "entry1": {
+                            "date_performed": "2024-04-30",
+                            "count": "20",
+                            "time_set": "8:00 AM",
+                            "time_elapsed": "2 hours"
+                        },
+                        "entry2": {
+                            "date_performed": "2024-04-29",
+                            "count": "18",
+                            "time_set": "9:15 AM",
+                            "time_elapsed": "1.5 hours"
+                        }
+                    }
+                },
+                "activity3": {
+                    "entries": {
+                        "entry1": {
+                            "date_performed": "2024-04-30",
+                            "count": "25",
+                            "time_set": "7:30 AM",
+                            "time_elapsed": "2.5 hours"
+                        },
+                        "entry2": {
+                            "date_performed": "2024-04-29",
+                            "count": "30",
+                            "time_set": "8:45 AM",
+                            "time_elapsed": "2 hours"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

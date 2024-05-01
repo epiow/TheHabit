@@ -1,43 +1,38 @@
 {
-    "rules": 
-    { 
-        "users": 
-        [
-            {
-                "user_id": "$uid",
-                "activities":
-                [
-                    {
-                        "activity_name": "$activity_name",
-                        "years":
-                        [
-                            {
-                                "year": "$year",
-                                "months":
-                                [
-                                    {
-                                        "month": "$month",
-                                        "days":
-                                        [
-                                            {
-                                                "day": "$day",
-                                                "entries":
-                                                [
-                                                    {
-                                                        "count": "$count",
-                                                        "time_elapsed": "$time_elapsed",
-                                                        "time_set": "$time_set"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
+    "rules": {
+        "users": {
+            "$uid": {
+                ".read": true,
+                ".write": true,
+                "activities": {
+                    ".read": true,
+                    ".write": true,
+                    "$activity_name": {
+                        ".read": true,
+                        ".write": true,
+                        "entries": {
+                            "$entry": {
+                                ".validate": "newData.hasChildren(['date_performed', 'count', 'time_set', 'time_elapsed'])",
+                                "date_performed: ":{
+                                    ".validate": "newData.isString()"
+                                },
+                                "count": {
+                                    ".validate": "newData.isString()"
+                                },
+                                "time_set": {
+                                    ".validate": "newData.isString()"
+                                },
+                                "time_elapsed": {
+                                    ".validate": "newData.isString()"
+                                },
+                                "$other": {
+                                    ".validate": false
+                                }
                             }
-                        ]
+                        }
                     }
-                ]
+                }
             }
-        ]
+        }
     }
 }

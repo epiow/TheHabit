@@ -1,7 +1,7 @@
-from modelClassUser import User
-from modelClassActivity import Activity
-from modelClassCalendar import Calendar, Year, Month, Day
-from modelClassActivity import Entry
+from Model.modelClassUser import User
+from Model.modelClassActivity import Activity
+from Model.modelClassCalendar import Calendar, Year, Month, Day
+from Model.modelClassEntry import Entry
 import pyrebase
 import urllib.parse
 from config import config_keys as keys
@@ -11,39 +11,19 @@ class Data:
         self.firebase = pyrebase.initialize_app(keys)
         self.auth = self.firebase.auth()
         self.db = self.firebase.database()
-        self.currentUser = None
-        self.users = []
+        self.currentUser: User = None
 
-    def read_user_data(self, user_id):
+    def read_user_data(self):
+        user_id = self.currentUser.token_id
         try:
-            user_data = self.db.child("users").child(user_id).get().val()
-            if user_data:
-                parsed_activities = {}
-                activities = user_data.get("activities", {})
-                for activity_id, activity_data in activities.items():
-                    parsed_activity = {"activity_id": activity_id, "entries": []}
-                    dates = activity_data.get("date", {})
-                    for year, year_data in dates.items():
-                        for month, month_data in year_data.get("months", {}).items():
-                            for day in month_data.get("days", []):
-                                if day is not None:
-                                    for entry_id, entry_data in day.items():
-                                        entry_details = entry_data.get("entry", entry_data)
-                                        time_set = entry_details.get("time_set", "")
-                                        time_elapsed = entry_details.get("time_elapsed", "")
-                                        count = entry_details.get("count", "")
-                                        # Ensure time_set exists before using it
-                                        if time_set:
-                                            parsed_activity["entries"].append({
-                                                "entry_id": entry_id,
-                                                "time_set": time_set,
-                                                "time_elapsed": time_elapsed,
-                                                "count": count
-                                            })
-                                        else:
-                                            print(f"Missing 'time_set' attribute for entry {entry_id}")
-                    parsed_activities[activity_id] = parsed_activity
-                return parsed_activities
+            if True:
+                user_data = self.db.child("users").child(user_id).get().val()
+                for activity_name, activity_entries in user_data["activities"].items():
+                    self.currentUser.createActivity(activity_name)
+                    self.currentUser.setCurrentActivity(activity_name)
+                    currentActivity: Activity = self.currentUser.activities[self.currentUser.currentActivity]
+                    for entry_key,entry_value in activity_entries["entries"].items():
+                        currentActivity.createEntry(entry_value["date_performed"], entry_value["time_set"], entry_value["time_elapsed"], entry_value["count"])  
             else:
                 print("No user data found for user:", user_id)
                 return None
@@ -51,60 +31,31 @@ class Data:
             print(f"Error reading user data for user ID '{user_id}': {e}")
             return None
 
-
-    def createUser(self, username, password):
+    def createUser(self, username, email, password):
         try:
-            self.auth.create_user_with_email_and_password(username, password)
-            return True
+            self.auth.create_user_with_email_and_password(email, password)
         except Exception as e:
             print(f"Error creating user: {e}")
             return False
-    
-    def loginUser(self, username, password):
         try:
-            user = self.auth.sign_in_with_email_and_password(username, password)
-            self.is_authenticated = True
-            user_id = user['localId']
-            user_data = self.read_user_data(user_id)
-            print(user_data)
-            '''
-            if user_data:
-                self.currentUser = User(username, password)
-                self.parse_user_data(user_data)
-                return self.currentUser
-            return None
-            '''
+            toChangeName = self.auth.sign_in_with_email_and_password(email,password)
+            print(toChangeName["localId"])
+            self.auth.update_profile(toChangeName["localId"], username)
+            return self.loginUser(email, password)
         except Exception as e:
-            print(f"Error authenticating user: {e}")
+            print("Error")
+            return False
+    
+    def loginUser(self, email, password):
+        from requests.exceptions import HTTPError
+        try:
+            toLogin = self.auth.sign_in_with_email_and_password(email, password)
+            self.currentUser = User(email, toLogin['localId'], toLogin['displayName'], password)
+            return toLogin
+        except HTTPError as e:
+            print(f"Error authenticating user: {e.errno}")
             return None
 
-    def parse_user_data(self, user_data):
-        if "activities" in user_data:
-            for activity_name, activity_data in user_data["activities"].items():
-                activity = Activity(activity_name)
-                self.currentUser.activities.append(activity)
-                if "date" in activity_data:
-                    for year, year_data in activity_data["date"].items():
-                        for month, month_data in year_data.get("months", {}).items():
-                            for day, day_data in month_data.get("days", {}).items():
-                                if day_data is not None:
-                                    for entry_id, entry_data in day_data.get("entries", {}).items():
-                                        entry_details = entry_data
-                                        time_set = entry_details.get("time_set", "")
-                                        time_elapsed = entry_details.get("time_elapsed", "")
-                                        count = entry_details.get("count", "")
-                                        if time_set:
-                                            entry = Entry(
-                                                date_performed="",  # You may need to adjust this
-                                                time_set=time_set,
-                                                time_elapsed=time_elapsed,
-                                                count=count
-                                            )
-                                            activity.entries.append(entry)
-                                        else:
-                                            print(f"Missing 'time_set' attribute for entry {entry_id}")
-        if "calendar" in user_data:
-            self.currentUser.calendar = self.parse_calendar_data(user_data["calendar"])
 
     def parse_calendar_data(self, calendar_data):
         calendar = Calendar()
