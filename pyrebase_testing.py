@@ -9,7 +9,6 @@ class Database:
         self.db = self.firebase.database()
         self.is_authenticated = False
         self.user = None
-
     def login_user(self, username, password):
         try:
             user = self.auth.sign_in_with_email_and_password(username, password)
@@ -44,7 +43,7 @@ class Database:
             "count": 1  
         }
         
-        self.db.child("users").child(user_uid).child("activities").child(activity_name).child("date").child(str(year)).child("months").child(str(month)).child("days").child(str(day)).push(data)
+        self.db.child("users").child(user_uid).child("activities").child(activity_name).child("date").child(str(year)).child("months").child(str(month)).child("days").child(str(day)).child("entry").push(data)
 
 
     def read_activity(self, user_uid):

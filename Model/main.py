@@ -1,4 +1,4 @@
-
+from modelClassData import *
 #TESTING PART ON THIS POINT
 def main():
     database = Data()
@@ -13,7 +13,6 @@ def main():
         print("Username:", user.username)
         print("Password:", user.password)
         
-        # Display user activities
         for activity in user.activities:
             print("\nActivity:", activity.activity_name)
             print("Entries:")
@@ -23,7 +22,7 @@ def main():
                 print("  Time elapsed:", entry.time_elapsed)
                 print("  Count:", entry.count)
 
-        # Display user's calendar
+        
         print("\nCalendar:")
         for year in user.calendar.years:
             print("Year:")

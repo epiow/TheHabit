@@ -10,8 +10,8 @@ db = Database()
 
 def main():
     # Replace with actual email and password
-    user_email = input("Create your email: ")
-    user_password = input("Create your password: ")
+    user_email = "epiow@gmail.com"    
+    user_password = "password123"
 
     # Authenticate the user
     user = db.login_user(user_email, user_password)
