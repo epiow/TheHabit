@@ -1,7 +1,8 @@
 from Model.modelClassUser import User
+
+
 class Data():
     def __init__(self, file_path):
-        self.file_path = file_path
         self.currentUser = None
         self.users: list[User] = []
     def createUser(self, username, password):
