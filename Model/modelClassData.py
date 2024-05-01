@@ -35,49 +35,12 @@ class Data:
         return None
     
     def loginUser(self, username, password):
-        try:
-            user = self.auth.sign_in_with_email_and_password(username, password)
-            self.is_authenticated = True
-            user_data = self.db.read_user_data(username)
-            if user_data:
-                self.currentUser = User(username, password)
-                self.parse_user_data(user_data)
-                return self.currentUser
-            return None
-        except Exception as e:
-            print(f"Error authenticating user: {e}")
-            return None
-
-    def parse_user_data(self, user_data):
-        for activity_name, activity_data in user_data.get("activities", {}).items():
-            activity = Activity(activity_name)
-            self.currentUser.activities.append(activity)
-            for date_performed, entry_data in activity_data.get("date", {}).items():
-                for entry_key, entry_values in entry_data.items():
-                    for entry_value in entry_values:
-                        entry = Entry(
-                            entry_value.get("time_set"),
-                            entry_value.get("time_elapsed"),
-                            entry_value.get("count")
-                        )
-                        activity.entries.append(entry)
-        self.currentUser.calendar = self.parse_calendar_data(user_data.get("calendar", {}))
-
-    def parse_calendar_data(self, calendar_data):
-        calendar = Calendar()
-        for year_key, year_data in calendar_data.items():
-            year = Year()
-            for month_key, month_data in year_data.items():
-                month = Month()
-                for day_key, day_data in month_data.items():
-                    day = Day()
-                    for activity_key, activity_data in day_data.items():
-                        activity = Activity(activity_key)
-                        day.activities.append(activity)
-                    month.weeks.append(day)
-                year.months.append(month)
-            calendar.years.append(year)
-        return calendar
+        userToLogin = self.findUser(username)
+        if userToLogin != None:
+            if self.users[userToLogin].password == password:
+                self.currentUser = userToLogin
+                return self.users[self.currentUser]
+        return None
     
     def editUser(self, username=None, password=None):
         if self.currentUser is not None:
