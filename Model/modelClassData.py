@@ -1,5 +1,5 @@
 from Model.modelClassUser import User
-
+from Model.modelClassActivity import
 
 class Data():
     def __init__(self, file_path):
@@ -20,6 +20,7 @@ class Data():
         return None
     
     def loginUser(self, username, password):
+        new_activity = Activity(db.activity_name, db.activity)
         userToLogin = self.findUser(username)
         if userToLogin != None:
             if self.users[userToLogin].password == password:
