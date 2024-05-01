@@ -1,85 +1,84 @@
 from View.viewProperties import *
+
 class windowMain:
-
-    vars = UserProperties()
-    colors = vars.colors
-    def __init__(self, page):
-        from Controller.controllerWindowMainEvents import eventToggleCrossOnClick, eventButtonOnHover
-        vars = self.vars
-        colors = self.colors
-        page.title              = "the Habit: Login"
-        page.window_width       = vars.scale(484)
-        page.window_height      = vars.scale(396)
-        page.bgcolor            = colors.background
-        page.window_resizable   = False
-        
-        
-        #if page.platform is ft.PagePlatform.MACOS:
-        #   page.window_title_bar_hidden = False
+    def __init__(self, page):  # Accept username as an argument
+        vars = UserProperties()
+        colors = vars.colors
+        page.title = "the Habit: Login"
+        page.window_width = vars.scale(484)
+        page.window_height = vars.scale(396)
+        page.bgcolor = colors.background
+        page.window_resizable = False
         page.window_title_bar_buttons_hidden = False
-
+        self.username= username
 
         bgDots = ft.Image(
             src=os.path.join(os.getcwd(), "Assets", 'dots-main-light.svg'),
-            fit = ft.ImageFit.FILL,
-            width = page.window_width,
-            height = page.window_height
+            fit=ft.ImageFit.FILL,
+            width=page.window_width,
+            height=page.window_height
         )
+
         iconLeftArrow = lambda: ft.Image(
             src=os.path.join(os.getcwd(), "Assets", 'icon-left-arrow-light.svg'),
-            fit = ft.ImageFit.FILL,
+            fit=ft.ImageFit.FILL,
             width=vars.scale(22),
             height=vars.scale(22)
         )
+
         iconRightArrow = lambda: ft.Image(
             src=os.path.join(os.getcwd(), "Assets", 'icon-right-arrow-light.svg'),
-            fit = ft.ImageFit.FILL,
+            fit=ft.ImageFit.FILL,
             width=vars.scale(22),
             height=vars.scale(22)
         )
+
         iconCross = lambda: ft.Image(
             src=os.path.join(os.getcwd(), "Assets", 'icon-cross-light.svg'),
             fit=ft.ImageFit.FILL,
-            width = vars.scale(22),
-            height= vars.scale(22)
+            width=vars.scale(22),
+            height=vars.scale(22)
         )
+
         staticDatePicker = ft.Text(
             "2024, April",
             style=vars.default_text_style,
             color=colors.foreground
         )
+
         staticWelcomeUser = ft.Text(
-            "Welcome, User!",
+            "Welcome, !",  # Set the username dynamically
             style=vars.default_text_style,
             color=colors.foreground
         )
+
         bgDots = ft.Container(
             bgDots,
-            opacity = 0.2,
+            opacity=0.2,
             left=0,
             top=0
         )
+
         buttonLeftArrow = ft.Container(
             iconLeftArrow(),
             left=vars.scale(308),
             top=vars.scale(66),
-            on_hover=eventButtonOnHover,
         )
+
         buttonRightArrow = ft.Container(
             iconRightArrow(),
             left=vars.scale(440),
             top=vars.scale(66),
             data=page,
-            on_hover=eventButtonOnHover,
         )
+
         toggleCross = lambda: ft.Container(
             iconCross(),
             data=True,
             left=vars.scale(154),
             top=vars.scale(154),
-            on_hover=eventButtonOnHover,
-            on_click=eventToggleCrossOnClick
         )
+
         staticDatePicker = ft.Container(
             staticDatePicker,
             padding=ft.padding.only(top=6),
@@ -89,6 +88,7 @@ class windowMain:
             top=vars.scale(66),
             alignment=ft.alignment.center
         )
+
         staticWelcomeUser = ft.Container(
             staticWelcomeUser,
             padding=ft.padding.only(right=6, top=6),
@@ -99,6 +99,7 @@ class windowMain:
             alignment=ft.alignment.center_right
 
         )
+
         def crosses(count):
             items = []
             offset = 0
@@ -108,7 +109,9 @@ class windowMain:
                 items.append(newToggleCross)
                 offset += 22
             return items
+
         listCrosses = crosses(14)
+
         self.stack = ft.Stack(
             [
                 bgDots,
@@ -118,5 +121,3 @@ class windowMain:
                 staticWelcomeUser
             ] + listCrosses
         )
-        #page.add(stack)
-    

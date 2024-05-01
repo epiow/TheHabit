@@ -28,20 +28,6 @@ class windowLogin:
                                     width   = page.window_width,
                                     height  = page.window_height,
                                 )
-        buttonLogin             = ft.Container(
-                                    content         = ft.Container(
-                                                        ft.Text("Login", style=vars.default_text_style),
-                                                        alignment=ft.alignment.center,
-                                                        padding=8
-                                                    ),
-                                    width           = vars.scale(154),
-                                    height          = vars.scale(22),
-                                    bgcolor         = colors.accent,
-                                    border_radius   = vars.scale(4),
-                                    ink             = True,
-                                    data            = page,
-                                    on_click        = eventButtonLoginClick
-                                )
         staticUsername          = ft.Text(
                                     "Username",
                                     style   = vars.default_text_style,
@@ -76,7 +62,20 @@ class windowLogin:
                                     height              = vars.scale(22),
                                     bgcolor             = vars.set_transparency(colors.foreground, 0.05),
         )
-        
+        buttonLogin             = ft.Container(
+                                    content         = ft.Container(
+                                                        ft.Text("Login", style=vars.default_text_style),
+                                                        alignment=ft.alignment.center,
+                                                        padding=8
+                                                    ),
+                                    width           = vars.scale(154),
+                                    height          = vars.scale(22),
+                                    bgcolor         = colors.accent,
+                                    border_radius   = vars.scale(4),
+                                    ink             = True,
+                                    data            = [editUsername, editPassword],
+                                    on_click        = eventButtonLoginClick
+                                )
         staticUsername          = ft.Container(
                                     staticUsername,
                                     padding     = vars.default_top_left_padding,
