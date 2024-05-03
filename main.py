@@ -1,47 +1,51 @@
-from Model.modelClassData import *
+import flet as ft
 
-# TESTING PART ON THIS POINT
-def main():
-    database = Data()
-    username = "ami"
-    email = "epiow@gmail.com"
-    password = "password123"
+from View.viewWindowLogin import windowLogin
+from View.viewWindowMain import windowMain
 
-    user = database.loginUser(email, password)  # Use 'database' instead of 'data'
-    if user != False:
-        print("User authentication successful!")
-        print("Username:", user["displayName"])
-        print("Email: ", user["email"])
-        database.read_user_data()
-        for i in database.currentUser.activities:
-            print(i.activity_name)
-            for j in i.entries:
-                print(j.date_performed)
-        '''
-        for activity in user.activities:
-            print("\nActivity:", activity.activity_name)
-            print("Entries:")
-            for entry in activity.entries:
-                print("- Date performed:", entry.date_performed)
-                print("  Time set:", entry.time_set)
-                print("  Time elapsed:", entry.time_elapsed)
-                print("  Count:", entry.count)
+def main(page: ft.Page):
+    page.title = "The Habit"
 
-        
-        print("\nCalendar:")
-        for year in user.calendar.years:
-            print("Year:")
-            for month in year.months:
-                print("Month:")
-                for week in month.weeks:
-                    print("Week:")
-                    for day in week.days:
-                        print("Day:")
-                        for activity in day.activities:
-                            print("- Activity:", activity.activity_name)
-        '''
-    else:
-        print("User authentication failed.")
+    def route_change(route):
+        page.views.clear()
+        if page.route == "/login":
+            page.views.append(
+                ft.View(
+                    "/login",
+                    [windowLogin(page)],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    vertical_alignment=ft.MainAxisAlignment.CENTER,
+                )
+            )
+        elif page.route == "/main":
+            page.views.append(
+                ft.View(
+                    "/main",
+                    [windowMain(page)],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    vertical_alignment=ft.MainAxisAlignment.CENTER,
+                )
+            )
+        else:
+            # Handle other routes or display a default view
+            page.views.append(
+                ft.View(
+                    "/",
+                    [ft.Text("Default View")],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    vertical_alignment=ft.MainAxisAlignment.CENTER,
+                )
+            )
+        page.update()
 
-if __name__ == "__main__":
-    main()
+    def view_pop(view):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
+
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.go(page.route)
+
+if __name__ == '__main__':
+    ft.app(target=main, view=ft.WEB_BROWSER)
