@@ -1,7 +1,7 @@
-from Model.modelClassUser import User
-from Model.modelClassActivity import Activity
-from Model.modelClassCalendar import Calendar, Year, Month, Day
-from Model.modelClassEntry import Entry
+from modelClassUser import User
+from modelClassActivity import Activity
+from modelClassCalendar import Calendar, Year, Month, Day
+from modelClassEntry import Entry
 import pyrebase
 import urllib.parse
 from config import config_keys as keys

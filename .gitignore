@@ -3,3 +3,4 @@
 **/JSON/*
 **/*.pyc
 .venv/*
+*config.py

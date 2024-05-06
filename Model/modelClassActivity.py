@@ -1,4 +1,4 @@
-from Model.modelClassEntry import Entry
+from modelClassEntry import Entry
 class Activity():
     def __init__(self, activity_name):
         self.activity_name: str = activity_name
