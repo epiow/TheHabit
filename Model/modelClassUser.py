@@ -14,7 +14,6 @@ class User():
             self.activities.append(new_activity)
             return True
         return False
-    
     def findActivity(self, activity_name):
         for activity in self.activities:
             if activity.activity_name == activity_name:
