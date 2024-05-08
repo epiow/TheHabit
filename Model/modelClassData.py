@@ -1,7 +1,9 @@
-from modelClassUser import User
-from modelClassActivity import Activity
-from modelClassCalendar import Calendar, Year, Month, Day
-from modelClassEntry import Entry
+from Model.modelClassUser import User
+from Model.modelClassActivity import Activity
+from Model.modelClassCalendar import Calendar, Year, Month, Day
+from Model.modelClassEntry import Entry
+import pandas as pd
+import numpy as np
 import pyrebase
 import urllib.parse
 import json
@@ -85,7 +87,12 @@ class Data:
                 year.months.append(month)
             calendar.years.append(year)
         return calendar
-    
+    def get_heatmap_data(self):
+        start_date = None
+        heatmap_data: np.ndarray
+        for activity in self.currentUser.activities:
+            for entry in activity.entries:
+                print(entry.date_performed.split("-")[1])
     def editUser(self, username=None, password=None):
         if self.currentUser is not None:
             if username is not None:
