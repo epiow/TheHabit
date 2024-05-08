@@ -1,4 +1,6 @@
-flet
+numpy
 pandas
+matplotlib
+tkinter
 pyrebase4
 setuptools
