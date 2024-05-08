@@ -1,6 +1,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import sys
+# Pachange nalang muna here ng link to Model
 sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
 from modelFirebaseToPython import Firebase
 
@@ -29,16 +30,30 @@ def switch_to_sign_up():
 
 def open_next_gui():
     window.destroy()  # Close the current window
-    import CalendarView  # Import the next GUI script
-    CalendarView.main()  # Call a func
+    import MainDashboard  # Import the next GUI script
+    MainDashboard.main()  # Call a func
+
+def close_button():
+    window.destroy()
 
 firebase = Firebase()
 
 window = Tk()
-window.geometry("630x840")
+window.overrideredirect(True)  # Remove standard title bar
+
+# Get screen width and height
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
+
+# Calculate window position for centering
+window_width = 630
+window_height = 840
+x_coordinate = int((screen_width / 2) - (window_width / 2))
+y_coordinate = int((screen_height / 2) - (window_height / 2))
+
+# Set window geometry and position
+window.geometry(f"{window_width}x{window_height}+{x_coordinate}+{y_coordinate}")
 window.configure(bg="#FFFFFF")
-
-
 canvas = Canvas(
     window,
     bg = "#FFFFFF",
@@ -93,7 +108,8 @@ entry_1 = Entry(
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
-    highlightthickness=0
+    highlightthickness=0,
+    font=("Rockwell", 26)
 )
 entry_1.place(
     x=82.0,
@@ -113,7 +129,8 @@ entry_2 = Entry(
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
-    highlightthickness=0
+    highlightthickness=0,
+    font=("Rockwell", 26)
 )
 entry_2.place(
     x=82.0,
@@ -154,6 +171,23 @@ button_2.place(
     height=56.1619873046875
 )
 
+button_image_3 = PhotoImage(
+    file=relative_to_assets("image_5.png"))
+
+button_3 = Button(
+    image=button_image_3,
+    borderwidth=0,
+    highlightthickness=0,
+    command=close_button,
+    relief="flat",
+)
+button_3.place(
+    x = 595.0,
+    y = 15.0,
+    width=25,
+    height=25
+)
+
 image_image_4 = PhotoImage(
     file=relative_to_assets("image_4.png"))
 image_4 = canvas.create_image(
@@ -162,12 +196,6 @@ image_4 = canvas.create_image(
     image=image_image_4
 )
 
-image_image_5 = PhotoImage(
-    file=relative_to_assets("image_5.png"))
-image_5 = canvas.create_image(
-    607.0,
-    27.0,
-    image=image_image_5
-)
+
 window.resizable(False, False)
 window.mainloop()
