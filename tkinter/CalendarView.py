@@ -49,8 +49,8 @@ window.configure(bg="#FFFFFF")
 canvas = Canvas(
     window,
     bg="#FFFFFF",
-    height=389,
-    width=489,
+    height=800,
+    width=500,
     bd=0,
     highlightthickness=0,
     relief="ridge"
@@ -63,12 +63,10 @@ image_1 = canvas.create_image(250.0, 187.0, image=image_image_1)
 image_image_2 = PhotoImage(file=relative_to_assets("image_2.png"))
 image_2 = canvas.create_image(393.0, 55.0, image=image_image_2)
 
-# Generate fake data for the heatmap
 start_date = datetime(2024, 1, 1)
 end_date = datetime(2024, 12, 31)
 data = generate_fake_data(start_date, end_date)
 
-# Plot calendar heatmap
 plot_calendar_heatmap(data, start_date, canvas)
 
 image_image_4 = PhotoImage(file=relative_to_assets("image_4.png"))
