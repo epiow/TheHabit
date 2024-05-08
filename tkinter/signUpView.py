@@ -33,6 +33,21 @@ window = Tk()
 window.geometry("633x840")
 window.configure(bg = "#FFFFFF")
 
+window.overrideredirect(True)  # Remove standard title bar
+
+# Get screen width and height
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
+
+# Calculate window position for centering
+window_width = 630
+window_height = 840
+x_coordinate = int((screen_width / 2) - (window_width / 2))
+y_coordinate = int((screen_height / 2) - (window_height / 2))
+
+# Set window geometry and position
+window.geometry(f"{window_width}x{window_height}+{x_coordinate}+{y_coordinate}")
+window.configure(bg="#FFFFFF")
 
 canvas = Canvas(
     window,
@@ -64,7 +79,10 @@ entry_1 = Entry(
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
-    highlightthickness=0
+    highlightthickness=0,
+    font=("Rockwell", 26),
+    
+
 )
 entry_1.place(
     x=80.0,
@@ -84,7 +102,9 @@ entry_2 = Entry(
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
-    highlightthickness=0
+    highlightthickness=0,
+    font=("Rockwell", 26)
+
 )
 entry_2.place(
     x=80.0,
@@ -104,7 +124,9 @@ entry_3 = Entry(
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
-    highlightthickness=0
+    highlightthickness=0,
+    font=("Rockwell", 26)
+
 )
 entry_3.place(
     x=80.0,
@@ -124,7 +146,9 @@ entry_4 = Entry(
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
-    highlightthickness=0
+    highlightthickness=0,
+    font=("Rockwell", 26)
+
 )
 entry_4.place(
     x=80.0,
