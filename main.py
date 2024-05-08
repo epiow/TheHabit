@@ -4,9 +4,11 @@ from View.viewProperties import *
 from View.viewWindowMain import *
 from Model.modelClassData import *
 
-def main(page: ft.Page):
+def main():
     database = Data()
-
+    database.loginUser("mega@megaa.moe", "Pass123.")
+    print(database.currentUser.username)
+'''
     x = UserProperties()
     page.data = [database, x]
     test = windowLogin(page)
@@ -14,6 +16,6 @@ def main(page: ft.Page):
     page.views.append(view)
     page.update()
 
-    
+    '''
 if __name__ == "__main__":
-    ft.app(target=main)
+    main()

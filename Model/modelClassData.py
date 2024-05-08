@@ -30,7 +30,10 @@ class Data:
         except Exception as e:
             print(f"Error reading user data for user ID '{user_id}': {e}")
             return None
-
+    def write_user_data(self):
+        user_id = self.currentUser.token_id
+        for activity in self.currentUser.activities:
+            print(activity.activity_name)
     def createUser(self, username, email, password):
         try:
             self.auth.create_user_with_email_and_password(email, password)
@@ -51,7 +54,8 @@ class Data:
         try:
             toLogin = self.auth.sign_in_with_email_and_password(email, password)
             self.currentUser = User(email, toLogin['localId'], toLogin['displayName'], password)
-            return toLogin
+            self.read_user_data()
+            return toLogin  
         except HTTPError as e:
             print(f"Error authenticating user: {e.errno}")
             return None
