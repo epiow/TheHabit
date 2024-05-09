@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as colors
 from matplotlib.colors import to_hex
+from CalendarWidget import CalendarApp
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / "assets" / "MainDashboardAssets"
-
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -66,6 +66,10 @@ def plot_calendar_heatmap(data, start_date, canvas):
             y1 = y0 + cell_height  # Adjusted height
             canvas.create_rectangle(x0, y0, x1, y1, fill=hex_color, outline="", tags="heatmap")
 
+def switch_to_timer():
+    window.destroy()
+    import TimerView
+    TimerView.main()
 def close_button():
     window.destroy()
 
@@ -88,6 +92,7 @@ y_coordinate = int((screen_height / 2) - (window_height / 2))
 window.geometry(f"{window_width}x{window_height}+{x_coordinate}+{y_coordinate}")
 window.configure(bg="#FFFFFF")
 
+
 canvas = Canvas(
     window,
     bg = "#FFFFFF",
@@ -99,6 +104,10 @@ canvas = Canvas(
 )
 
 canvas.place(x = 0, y = 0)
+
+calendar_app = CalendarApp(canvas)
+calendar_window = canvas.create_window(714, 450, anchor="nw", window=calendar_app)
+
 image_image_1 = PhotoImage(
     file=relative_to_assets("image_1.png"))
 image_1 = canvas.create_image(
@@ -114,6 +123,22 @@ image_2 = canvas.create_image(
     690.0,
     image=image_image_2
 )
+choose_activity_image = PhotoImage(
+    file=relative_to_assets("choose_activity.png")
+)
+choose_activity_button = Button(
+    image=choose_activity_image,
+    borderwidth=0,
+    highlightthickness=0,
+    command=switch_to_timer,
+    relief="flat"
+)
+choose_activity_button.place(
+    x=273,
+    y=515,
+    width=239,
+    height=84
+)
 
 button_image_1 = PhotoImage(
     file=relative_to_assets("button_1.png"))
@@ -121,7 +146,7 @@ button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=lambda:print('test'),
     relief="flat"
 )
 button_1.place(
