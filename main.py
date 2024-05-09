@@ -28,7 +28,7 @@ def custom_heatmap_colormap():
     """
     cmap = colors.LinearSegmentedColormap.from_list(
         "custom_heatmap",
-        [(0.0, "#FFFFFF"), (1.0, "#1BCF6E")],  # Color range (white to #1BCF6E)
+        [(0.0, "#1BCF6E00"), (1.0, "#1BCF6E")],  # Color range (white to #1BCF6E)
     )
     return cmap
 
