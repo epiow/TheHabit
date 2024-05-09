@@ -1,6 +1,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import sys
+
 # Pachange nalang muna here ng link to Model
 sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
 from modelFirebaseToPython import Firebase
@@ -24,13 +25,13 @@ def login():
         print("Login failed. Please check your credentials.")
 
 def switch_to_sign_up():
-    window.destroy()
     import signUpView
+    window.destroy()
     signUpView.main()
 
 def open_next_gui():
+    import MainDashboard
     window.destroy()  # Close the current window
-    import MainDashboard  # Import the next GUI script
     MainDashboard.main()  # Call a func
 
 def close_button():
@@ -117,6 +118,7 @@ entry_1.place(
     width=477.0,
     height=52.0
 )
+
 
 entry_image_2 = PhotoImage(
     file=relative_to_assets("entry_2.png"))
