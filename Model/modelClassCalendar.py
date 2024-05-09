@@ -1,4 +1,3 @@
-from modelClassActivity import *
 class Calendar:
     def __init__(self):
         self.current_year: int = 0
@@ -14,4 +13,4 @@ class Month:
 class Day:
     def __init__(self):
         self.current_activity = 0
-        self.activities: list[Activity] = []
+        self.value = 0

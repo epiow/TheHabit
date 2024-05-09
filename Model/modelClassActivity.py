@@ -1,4 +1,5 @@
-from modelClassEntry import Entry
+from Model.modelClassEntry import Entry
+import numpy as np
 class Activity():
     def __init__(self, activity_name):
         self.activity_name: str = activity_name
@@ -15,7 +16,14 @@ class Activity():
             self.entries[entryToIncrement].count += 1
             return True
         return False
-    
+    def calculateHeatmap(self):
+        heatmap_data = []
+        for entry in self.entries:
+            heatmap_data.append(entry.count)
+        heatmap_data = np.array(heatmap_data)
+        heatmap_data = (heatmap_data + 0.5 - np.min(heatmap_data)) / (np.max(heatmap_data) + 0.5 - np.min(heatmap_data))
+        print(self.activity_name, heatmap_data)
+        return heatmap_data
     def findEntry(self, date_performed):
         for entry in self.entries:
             if entry.date_performed == date_performed:

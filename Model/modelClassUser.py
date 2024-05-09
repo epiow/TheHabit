@@ -1,4 +1,4 @@
-from modelClassActivity import Activity
+from Model.modelClassActivity import Activity
 class User():
     def __init__(self, email, token_id, username, password):
         self.email: str = email
@@ -14,7 +14,6 @@ class User():
             self.activities.append(new_activity)
             return True
         return False
-    
     def findActivity(self, activity_name):
         for activity in self.activities:
             if activity.activity_name == activity_name:
