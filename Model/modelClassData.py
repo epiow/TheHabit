@@ -1,9 +1,12 @@
-from modelClassUser import User
-from modelClassActivity import Activity
-from modelClassCalendar import Calendar, Year, Month, Day
-from modelClassEntry import Entry
+from Model.modelClassUser import User
+from Model.modelClassActivity import Activity
+from Model.modelClassCalendar import Calendar, Year, Month, Day
+from Model.modelClassEntry import Entry
+import pandas as pd
+import numpy as np
 import pyrebase
 import urllib.parse
+import json
 from config import config_keys as keys
 
 class Data:
@@ -12,26 +15,38 @@ class Data:
         self.auth = self.firebase.auth()
         self.db = self.firebase.database()
         self.currentUser: User = None
-
     def read_user_data(self):
         user_id = self.currentUser.token_id
         try:
             if True:
                 user_data = self.db.child("users").child(user_id).get().val()
-                for activity_name, activity_entries in user_data["activities"].items():
+                for activity_name, activity_entries in user_data.items():
                     self.currentUser.createActivity(activity_name)
                     self.currentUser.setCurrentActivity(activity_name)
                     currentActivity: Activity = self.currentUser.activities[self.currentUser.currentActivity]
-                    for entry_key,entry_value in activity_entries["entries"].items():
-                        currentActivity.createEntry(entry_value["date_performed"], entry_value["time_set"], entry_value["time_elapsed"], entry_value["count"])  
+                    for date_performed,entry_value in activity_entries.items():
+                        currentActivity.createEntry(date_performed, entry_value["time_set"], entry_value["time_elapsed"], entry_value["count"])  
             else:
                 print("No user data found for user:", user_id)
                 return None
         except Exception as e:
             print(f"Error reading user data for user ID '{user_id}': {e}")
             return None
-
-    def createUser(self, username, email, password):
+    def write_user_data(self):
+        data = {}
+        user_id = self.currentUser.token_id
+        for activity in self.currentUser.activities:
+            data[activity.activity_name] = {}
+            for entry in activity.entries:
+                entry_to_write = {
+                    "count": entry.count,
+                    "time_elapsed": entry.time_elapsed,
+                    "time_set": entry.time_set
+                }
+                data[activity.activity_name][entry.date_performed] = entry_to_write
+        self.db.child("users").child(user_id).update(data)
+        return data
+    def create_user(self, username, email, password):
         try:
             self.auth.create_user_with_email_and_password(email, password)
         except Exception as e:
@@ -41,21 +56,21 @@ class Data:
             toChangeName = self.auth.sign_in_with_email_and_password(email,password)
             print(toChangeName["localId"])
             self.auth.update_profile(toChangeName["localId"], username)
-            return self.loginUser(email, password)
+            return self.login_user(email, password)
         except Exception as e:
             print("Error")
             return False
-    
-    def loginUser(self, email, password):
+   
+    def login_user(self, email, password):
         from requests.exceptions import HTTPError
         try:
             toLogin = self.auth.sign_in_with_email_and_password(email, password)
             self.currentUser = User(email, toLogin['localId'], toLogin['displayName'], password)
-            return toLogin
+            self.read_user_data()
+            return toLogin  
         except HTTPError as e:
             print(f"Error authenticating user: {e.errno}")
             return None
-
 
     def parse_calendar_data(self, calendar_data):
         calendar = Calendar()
@@ -72,7 +87,12 @@ class Data:
                 year.months.append(month)
             calendar.years.append(year)
         return calendar
-    
+    def get_heatmap_data(self):
+        start_date = None
+        heatmap_data: np.ndarray
+        for activity in self.currentUser.activities:
+            for entry in activity.entries:
+                print(entry.date_performed.split("-")[1])
     def editUser(self, username=None, password=None):
         if self.currentUser is not None:
             if username is not None:

@@ -1,74 +1,134 @@
 {
     "users": {
         "rqnhk3yz9QgAkI5lGG2zQaHYyMA3": {
-            "activities": {
-                "activity1": {
-                    "entries": {
-                        "entry1": {
-                            "date_performed": "2024-04-30",
-                            "count": "10",
-                            "time_set": "10:00 AM",
-                            "time_elapsed": "1 hour"
-                        },
-                        "entry2": {
-                            "date_performed": "2024-04-29",
-                            "count": "15",
-                            "time_set": "11:30 AM",
-                            "time_elapsed": "45 minutes"
-                        }
-                    }
+            "activity1": {
+                "2024-04-30": {
+                    "count": 10,
+                    "time_set": 36000,
+                    "time_elapsed": 3600
                 },
-                "activity2": {
-                    "entries": {
-                        "entry1": {
-                            "date_performed": "2024-04-30",
-                            "count": "5",
-                            "time_set": "9:00 AM",
-                            "time_elapsed": "30 minutes"
-                        },
-                        "entry2": {
-                            "date_performed": "2024-04-29",
-                            "count": "8",
-                            "time_set": "10:45 AM",
-                            "time_elapsed": "20 minutes"
-                        }
-                    }
+                "2024-04-29": {
+                    "count": 15,
+                    "time_set": 41400,
+                    "time_elapsed": 2700
+                },
+                "2024-04-28": {
+                    "count": 12,
+                    "time_set": 37800,
+                    "time_elapsed": 3000
+                },
+                "2024-04-27": {
+                    "count": 18,
+                    "time_set": 36000,
+                    "time_elapsed": 3600
+                },
+                "2024-04-26": {
+                    "count": 20,
+                    "time_set": 34200,
+                    "time_elapsed": 2400
+                },
+                "2024-04-25": {
+                    "count": 17,
+                    "time_set": 39600,
+                    "time_elapsed": 3300
+                }
+            },
+            "activity2": {
+                "2024-04-30": {
+                    "count": 5,
+                    "time_set": 32400,
+                    "time_elapsed": 1800
+                },
+                "2024-04-29": {
+                    "count": 8,
+                    "time_set": 38700,
+                    "time_elapsed": 1200
+                },
+                "2024-04-28": {
+                    "count": 7,
+                    "time_set": 35100,
+                    "time_elapsed": 1500
+                },
+                "2024-04-27": {
+                    "count": 10,
+                    "time_set": 33300,
+                    "time_elapsed": 3000
+                },
+                "2024-04-26": {
+                    "count": 9,
+                    "time_set": 30600,
+                    "time_elapsed": 2100
+                },
+                "2024-04-25": {
+                    "count": 6,
+                    "time_set": 36900,
+                    "time_elapsed": 900
                 }
             }
         },
         "SZKTjVuknvd0KwjMIKkZQ37ywzt1": {
-            "activities": {
-                "activity1": {
-                    "entries": {
-                        "entry1": {
-                            "date_performed": "2024-04-30",
-                            "count": "20",
-                            "time_set": "8:00 AM",
-                            "time_elapsed": "2 hours"
-                        },
-                        "entry2": {
-                            "date_performed": "2024-04-29",
-                            "count": "18",
-                            "time_set": "9:15 AM",
-                            "time_elapsed": "1.5 hours"
-                        }
-                    }
+            "activity1": {
+                "2024-04-30": {
+                    "count": 20,
+                    "time_set": 28800,
+                    "time_elapsed": 7200
                 },
-                "activity3": {
-                    "entries": {
-                        "entry1": {
-                            "date_performed": "2024-04-30",
-                            "count": "25",
-                            "time_set": "7:30 AM",
-                            "time_elapsed": "2.5 hours"
-                        },
-                        "entry2": {
-                            "date_performed": "2024-04-29",
-                            "count": "30",
-                            "time_set": "8:45 AM",
-                            "time_elapsed": "2 hours"
-                        }
-                    }
+                "2024-04-29": {
+                    "count": 18,
+                    "time_set": 33300,
+                    "time_elapsed": 5400
+                },
+                "2024-04-28": {
+                    "count": 25,
+                    "time_set": 27000,
+                    "time_elapsed": 9000
+                },
+                "2024-04-27": {
+                    "count": 22,
+                    "time_set": 31500,
+                    "time_elapsed": 8100
+                },
+                "2024-04-26": {
+                    "count": 23,
+                    "time_set": 34200,
+                    "time_elapsed": 7200
+                },
+                "2024-04-25": {
+                    "count": 20,
+                    "time_set": 29700,
+                    "time_elapsed": 9600
+                }
+            },
+            "activity3": {
+                "2024-04-30": {
+                    "count": 25,
+                    "time_set": 27000,
+                    "time_elapsed": 9000
+                },
+                "2024-04-29": {
+                    "count": 30,
+                    "time_set": 31500,
+                    "time_elapsed": 7200
+                },
+                "2024-04-28": {
+                    "count": 35,
+                    "time_set": 26100,
+                    "time_elapsed": 10800
+                },
+                "2024-04-27": {
+                    "count": 32,
+                    "time_set": 30600,
+                    "time_elapsed": 9900
+                },
+                "2024-04-26": {
+                    "count": 28,
+                    "time_set": 27900,
+                    "time_elapsed": 7200
+                },
+                "2024-04-25": {
+                    "count": 30,
+                    "time_set": 32400,
+                    "time_elapsed": 6000
                 }
             }
         }
