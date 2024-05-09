@@ -47,14 +47,18 @@ def update_time():
         elapsed_time_label.config(text=formatted_time)
         window.after(10, update_time)  # Schedule next update after 10 milliseconds
 
+prev_elapsed_time = 0
+
 def start_stop():
-    global is_running, start_time
+    global is_running, start_time, prev_elapsed_time
+
     if not is_running:
         is_running = True
-        start_time = time.time()  # Record start time when starting
+        start_time = time.time() - prev_elapsed_time  # Resume from the previous elapsed time
         update_time()
     else:
         is_running = False
+        prev_elapsed_time = time.time() - start_time  # Store the elapsed time before stopping
 
 def reset():
     global current_time, is_running
@@ -62,7 +66,32 @@ def reset():
     is_running = False
     elapsed_time_label.config(text="00:00.000000")  # Reset with milliseconds
 
+paused_time = None
 
+def pause_timer():
+    global is_running, paused_time
+    if is_running:
+        is_running = False
+        paused_time = time.time()  # Store the current time when paused
+    else:
+        is_running = True
+        start_time += time.time() - paused_time  # Adjust start_time to account for the pause
+        paused_time = None  # Reset paused_time
+        update_time()
+
+def log_time():
+    global current_time, start_time
+    elapsed_time = current_time - start_time
+    seconds = int(elapsed_time)
+    microseconds = int((elapsed_time - seconds) * 1000000)
+    formatted_time = f"{seconds}.{int(microseconds/10000):02d}"
+    print(f"Logged time: {formatted_time} seconds")
+
+def discard_time():
+    global current_time, is_running
+    current_time = 0
+    is_running = False
+    elapsed_time_label.config(text="00:00.00")
 
 # Calculate window position for centering
 screen_width = window.winfo_screenwidth()
@@ -106,7 +135,7 @@ LogButton_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=log_time,
     relief="flat"
 )
 LogButton_1.place(
@@ -138,7 +167,7 @@ DiscardButton_3 = Button(
     image=button_image_3,
     borderwidth=0,
     highlightthickness=0,
-    command=start_stop,
+    command=discard_time,
     relief="flat"
 )
 DiscardButton_3.place(
@@ -154,7 +183,7 @@ PauseButton_4 = Button(
     image=button_image_4,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_4 clicked"),
+    command=pause_timer,
     relief="flat"
 )
 PauseButton_4.place(
@@ -171,6 +200,7 @@ CloseButton_4 = Button(
     borderwidth=0,
     highlightthickness=0,
     command=close_button,
+    background="#D9D9D9",
     relief="flat"
 )
 CloseButton_4.place(
