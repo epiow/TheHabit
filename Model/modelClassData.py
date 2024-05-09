@@ -71,28 +71,12 @@ class Data:
         except HTTPError as e:
             print(f"Error authenticating user: {e.errno}")
             return None
-
-    def parse_calendar_data(self, calendar_data):
-        calendar = Calendar()
-        for year_key, year_data in calendar_data.items():
-            year = Year()
-            for month_key, month_data in year_data.items():
-                month = Month()
-                for day_key, day_data in month_data.items():
-                    day = Day()
-                    for activity_key, activity_data in day_data.items():
-                        activity = Activity(activity_key)
-                        day.activities.append(activity)
-                    month.weeks.append(day)
-                year.months.append(month)
-            calendar.years.append(year)
-        return calendar
     def get_heatmap_data(self):
         start_date = None
-        heatmap_data: np.ndarray
+        heatmap_data: list = []
         for activity in self.currentUser.activities:
-            for entry in activity.entries:
-                print(entry.date_performed.split("-")[1])
+            heatmap_data.append(activity.calculateHeatmap())
+        return heatmap_data
     def editUser(self, username=None, password=None):
         if self.currentUser is not None:
             if username is not None:
