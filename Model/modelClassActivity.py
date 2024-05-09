@@ -18,12 +18,43 @@ class Activity():
         return False
     def calculateHeatmap(self):
         heatmap_data = []
+        dates: list[list[int]] = []
         for entry in self.entries:
-            heatmap_data.append(entry.count)
+            year, month, date = entry.date_performed.split("-")
+            dates.append([int(year), int(month), int(date)])
+        dates = [min(dates), max(dates)]
+        day = 1
+        i = 0
+        while i < len(self.entries):
+            entry = self.entries[i]
+            if(int(entry.date_performed.split("-")[2]) == day):
+                heatmap_data.append(entry.count)
+            else:
+                heatmap_data.append(0)
+                i -= 1
+            if(day == dates[1]): break
+            day += 1
+            i += 1
+
         heatmap_data = np.array(heatmap_data)
         heatmap_data = (heatmap_data + 0.5 - np.min(heatmap_data)) / (np.max(heatmap_data) + 0.5 - np.min(heatmap_data))
         print(self.activity_name, heatmap_data)
         return heatmap_data
+    def calculateStreak(self):
+        streaks = []
+        dates: list[list[int]] = []
+        for entry in self.entries:
+            year, month, date = entry.date_performed.split("-")
+            dates.append([int(year), int(month), int(date)])
+        dates = [min(dates), max(dates)]
+        day = 1
+        count = 0
+        for entry in self.entries:
+            if(int(entry.date_performed.split("-")[2]) == day):
+                count += 1
+            else:
+                streaks.append(count)
+            day += 1
     def findEntry(self, date_performed):
         for entry in self.entries:
             if entry.date_performed == date_performed:
