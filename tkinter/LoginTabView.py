@@ -4,6 +4,7 @@ import sys
 
 # Pachange nalang muna here ng link to Model
 sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
+from modelClassData import Data
 from modelFirebaseToPython import Firebase
 
 OUTPUT_PATH = Path(__file__).parent
@@ -12,10 +13,15 @@ ASSETS_PATH = OUTPUT_PATH / "assets" / "LoginTabAssets"
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+
+user = Data()
+
 def login():
+
+
     email = entry_1.get()
     password = entry_2.get()
-    user = firebase.login_user(email, password)
+    logged_in_user = user.login_user(email, password)
     if user:
         # Login successful, perform any necessary actions
         # For example, you can open the next GUI
@@ -25,19 +31,17 @@ def login():
         print("Login failed. Please check your credentials.")
 
 def switch_to_sign_up():
-    import signUpView
     window.destroy()
-    signUpView.main()
+    import signUpView
+    signUpView.main(user)
 
 def open_next_gui():
+    window.destroy()  
     import MainDashboard
-    window.destroy()  # Close the current window
-    MainDashboard.main()  # Call a func
+    MainDashboard.main(user) 
 
 def close_button():
     window.destroy()
-
-firebase = Firebase()
 
 window = Tk()
 window.overrideredirect(True)  # Remove standard title bar

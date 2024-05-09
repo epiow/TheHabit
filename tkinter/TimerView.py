@@ -1,5 +1,8 @@
 from pathlib import Path
 import time
+import pyrebase
+from datetime import datetime
+from config import config_keys as keys
 from tkinter import Tk, Label, Canvas, Entry, Text, Button, PhotoImage
 
 
@@ -9,6 +12,9 @@ ASSETS_PATH = OUTPUT_PATH / "assets" / "TimerAssets"
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
+
+firebase = pyrebase.initialize_app(keys)
+db = firebase.database()
 
 
 window = Tk()
@@ -20,7 +26,8 @@ window.overrideredirect(True)  # Remove standard title bar
 def close_button():
     window.destroy()
 
-
+def choose_activity():
+    pass
 
 current_time = 0
 is_running = False
@@ -86,6 +93,17 @@ def log_time():
     microseconds = int((elapsed_time - seconds) * 1000000)
     formatted_time = f"{seconds}.{int(microseconds/10000):02d}"
     print(f"Logged time: {formatted_time} seconds")
+
+    today_date = datetime.today().strftime('%Y-%m-%d')
+
+    user_uid = "SZKTjVuknvd0KwjMIKkZQ37ywzt1" 
+
+    data = {
+        "time_set": start_time,  # Store the start time
+        "time_elapsed": elapsed_time,  # Store the elapsed time
+        "count": 1
+    }
+    db.child("users").child(user_uid).child("activities").child("Timer").child(today_date).set(data)
 
 def discard_time():
     global current_time, is_running

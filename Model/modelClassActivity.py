@@ -1,4 +1,4 @@
-from Model.modelClassEntry import Entry
+from modelClassEntry import Entry
 import numpy as np
 class Activity():
     def __init__(self, activity_name):
