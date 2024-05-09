@@ -34,7 +34,8 @@ def generate_fake_data(start_date, end_date):
     """
     date_range = end_date - start_date
     num_days = date_range.days + 1
-    data = np.random.rand(num_days) # Generate random values
+    data = np.random.rand(num_days) 
+    print# Generate random values
     num_weeks = num_days // 7
     data = data[:num_weeks*7]  # Trim excess days
     return data.reshape(num_weeks, 7)  # Reshape into weeks
