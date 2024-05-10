@@ -1,2 +1,2 @@
-from modelClassCalendar import *
+from .modelClassCalendar import *
 #not done

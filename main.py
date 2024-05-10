@@ -1,12 +1,12 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, PhotoImage, Button
+#from tkinter import Tk, Canvas, PhotoImage, Button
 from datetime import datetime, timedelta, date
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as colors
 from matplotlib.colors import to_hex
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
-from Model.modelClassData import *
+from Model.modelClassData import Data
 database = Data()
 database.login_user("mega@megaa.moe", "Pass123.")
 database.read_user_data()

@@ -1,13 +1,13 @@
-from modelClassUser import User
-from modelClassActivity import Activity
-from modelClassCalendar import Calendar, Year, Month, Day
-from modelClassEntry import Entry
+from .modelClassUser import User
+from .modelClassActivity import Activity
+from .modelClassCalendar import Calendar, Year, Month, Day
+from .modelClassEntry import Entry
 import pandas as pd
 import numpy as np
 import pyrebase
 import urllib.parse
 import json
-from config import config_keys as keys
+from .config import config_keys as keys
 
 class Data:
     def __init__(self):
