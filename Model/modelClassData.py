@@ -25,7 +25,7 @@ class Data:
                     self.currentUser.setCurrentActivity(activity_name)
                     currentActivity: Activity = self.currentUser.activities[self.currentUser.currentActivity]
                     for date_performed,entry_value in activity_entries.items():
-                        currentActivity.createEntry(date_performed, entry_value["time_set"], entry_value["time_elapsed"], entry_value["count"])  
+                        currentActivity.createEntry(date_performed, entry_value["time_set"], entry_value["time_elapsed"], entry_value["count"], entry_value["notes"])  
             else:
                 print("No user data found for user:", user_id)
                 return None
@@ -41,7 +41,8 @@ class Data:
                 entry_to_write = {
                     "count": entry.count,
                     "time_elapsed": entry.time_elapsed,
-                    "time_set": entry.time_set
+                    "time_set": entry.time_set,
+                    "notes": entry.notes
                 }
                 data[activity.activity_name][entry.date_performed] = entry_to_write
         self.db.child("users").child(user_id).update(data)

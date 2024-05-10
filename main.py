@@ -8,7 +8,7 @@ from matplotlib.colors import to_hex
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from Model.modelClassData import *
 database = Data()
-database.login_user("epiow@gmail.com", "password123")
+database.login_user("mega@megaa.moe", "Pass123.")
 database.read_user_data()
 test = database.write_user_data()
 tt2 = database.get_heatmap_data()
@@ -26,9 +26,10 @@ def custom_heatmap_colormap():
     """
     Create a custom colormap with #1BCF6E as the maximum value.
     """
+    np.linspace(0.0,1.0,)
     cmap = colors.LinearSegmentedColormap.from_list(
         "custom_heatmap",
-        [(0.0, "#1BCF6E00"), (1.0, "#1BCF6E")],  # Color range (white to #1BCF6E)
+        [(0.0, "#e"), (1.0, "#1BCF6E")],  # Color range (white to #1BCF6E)
     )
     return cmap
 
