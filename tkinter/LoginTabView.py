@@ -1,8 +1,10 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import sys
+
 # Pachange nalang muna here ng link to Model
 sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
+from modelClassData import Data
 from modelFirebaseToPython import Firebase
 
 OUTPUT_PATH = Path(__file__).parent
@@ -11,10 +13,15 @@ ASSETS_PATH = OUTPUT_PATH / "assets" / "LoginTabAssets"
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+
+user = Data()
+
 def login():
+
+
     email = entry_1.get()
     password = entry_2.get()
-    user = firebase.login_user(email, password)
+    logged_in_user = user.login_user(email, password)
     if user:
         # Login successful, perform any necessary actions
         # For example, you can open the next GUI
@@ -26,17 +33,15 @@ def login():
 def switch_to_sign_up():
     window.destroy()
     import signUpView
-    signUpView.main()
+    signUpView.main(user)
 
 def open_next_gui():
-    window.destroy()  # Close the current window
-    import MainDashboard  # Import the next GUI script
-    MainDashboard.main()  # Call a func
+    window.destroy()  
+    import MainDashboard
+    MainDashboard.main(user) 
 
 def close_button():
     window.destroy()
-
-firebase = Firebase()
 
 window = Tk()
 window.overrideredirect(True)  # Remove standard title bar
@@ -117,6 +122,7 @@ entry_1.place(
     width=477.0,
     height=52.0
 )
+
 
 entry_image_2 = PhotoImage(
     file=relative_to_assets("entry_2.png"))
