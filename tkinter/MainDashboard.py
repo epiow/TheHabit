@@ -41,19 +41,6 @@ def main(user):
         )
         return cmap
 
-
-    def generate_fake_data(start_date, end_date):
-        """
-        Generate fake data for the heatmap.
-        """
-        date_range = end_date - start_date
-        num_days = date_range.days + 1
-        data = np.random.rand(num_days) 
-        print# Generate random values
-        num_weeks = num_days // 7
-        data = data[:num_weeks*7]  # Trim excess days
-        return data.reshape(num_weeks, 7)  # Reshape into weeks
-
     def plot_calendar_heatmap(data, start_date, canvas):
         """
         Plot a calendar heatmap with horizontal cells.
@@ -74,7 +61,7 @@ def main(user):
                 hex_color = to_hex(rgba_color)  # Convert to hexadecimal string
 
                 # Adjust x and y coordinates with cell spacing
-                x0 = 190.0 + day_idx * (cell_width + cell_spacing_x) - 35
+                x0 = 200.0 + day_idx * (cell_width + cell_spacing_x) - 35
                 y0 = 90.0 + week_idx * (cell_height + cell_spacing_y) + 125
                 x1 = x0 + cell_width # Adjusted width
                 y1 = y0 + cell_height  # Adjusted height
@@ -93,8 +80,13 @@ def main(user):
     def close_button():
         window.destroy()
 
-    window = Tk()
+    def logout_button_func():
+        window.destroy()
+        import LoginTabView
+        LoginTabView.main()
 
+    window = Tk()
+    window.title("TheHabit")
     window.geometry("1231x840")
     window.configure(bg = "#FFFFFF")
     #window.overrideredirect(True)
@@ -206,36 +198,20 @@ def main(user):
     )
 
 
-    button_image_2 = PhotoImage(
-        file=relative_to_assets("button_2.png"))
-    button_2 = Button(
-        image=button_image_2,
+    logout_button_image = PhotoImage(
+        file=relative_to_assets("back.png"))
+    logout_button = Button(
+        image=logout_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print(selected_activity()),
+        command=logout_button_func,
         relief="flat"
     )
-    button_2.place(
-        x=11.0,
-        y=16.0,
-        width=45.0,
-        height=45.0
-    )
-
-    button_image_3 = PhotoImage(
-        file=relative_to_assets("button_3.png"))
-    button_3 = Button(
-        image=button_image_3,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print(f"{user.get_activities_list()}"),
-        relief="flat"
-    )
-    button_3.place(
-        x=11.0,
-        y=71.0,
-        width=45.0,
-        height=45.0
+    logout_button.place(
+        x=15,
+        y=12,
+        width=53,
+        height=32
     )
 
     button_image_4 = PhotoImage(
@@ -266,9 +242,8 @@ def main(user):
 
     today = date.today()
     start_date = today - timedelta(days=5)
-    end_date = today + timedelta(days=360)
+    end_date = today + timedelta(days=30)
 
-    #data = generate_fake_data(start_date, end_date)
     user_heatmap = user.get_heatmap_data()
     plot_calendar_heatmap(user_heatmap, start_date, canvas)
 
