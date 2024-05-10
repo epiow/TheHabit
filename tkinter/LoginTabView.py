@@ -22,7 +22,7 @@ def login():
     email = entry_1.get()
     password = entry_2.get()
     logged_in_user = user.login_user(email, password)
-    if user:
+    if logged_in_user:
         # Login successful, perform any necessary actions
         # For example, you can open the next GUI
         open_next_gui()
@@ -33,7 +33,7 @@ def login():
 def switch_to_sign_up():
     window.destroy()
     import signUpView
-    signUpView.main(user)
+    signUpView.main()
 
 def open_next_gui():
     window.destroy()  
