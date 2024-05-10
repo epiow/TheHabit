@@ -9,7 +9,11 @@ from tkinter import Tk, Label, Canvas, Entry, Text, Button, PhotoImage
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / "assets" / "TimerAssets"
 
-def main(user):
+def main(user, activity_name):
+    global is_running, current_time, prev_elapsed_time, paused_time
+
+    current_time = 0
+    is_running = False
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
 
@@ -29,8 +33,7 @@ def main(user):
     def choose_activity():
         pass
 
-    current_time = 0
-    is_running = False
+
 
     def update_time():
         global current_time, is_running, start_time
@@ -93,17 +96,18 @@ def main(user):
         microseconds = int((elapsed_time - seconds) * 1000000)
         formatted_time = f"{seconds}.{int(microseconds/10000):02d}"
         print(f"Logged time: {formatted_time} seconds")
-
         today_date = datetime.today().strftime('%Y-%m-%d')
+        print(activity_name)
+        print(today_date)
 
-        user_uid = "SZKTjVuknvd0KwjMIKkZQ37ywzt1" 
 
-        data = {
-            "time_set": start_time,  # Store the start time
-            "time_elapsed": elapsed_time,  # Store the elapsed time
-            "count": 1
-        }
-        db.child("users").child(user_uid).child("activities").child("Timer").child(today_date).set(data)
+        #NEED TO BE FIXED! HEATMAP PLOTTING DOES NOT WORK ON SOME VALUES
+        user.currentUser.setCurrentActivity(activity_name)
+        user.currentUser.activities[user.currentUser.currentActivity].createEntry(today_date, round(elapsed_time)*5 , round(elapsed_time), 4, "")
+        user.write_user_data()
+
+    #    def createEntry(self, date_performed, time_set, time_elapsed, count, notes=""):
+
 
     def discard_time():
         global current_time, is_running

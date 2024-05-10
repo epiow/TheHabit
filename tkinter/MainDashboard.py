@@ -7,6 +7,9 @@ import matplotlib.colors as colors
 from matplotlib.colors import to_hex
 from CalendarWidget import CalendarApp
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+import sys
+sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
+from modelClassData import Data
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -26,6 +29,7 @@ def main(user):
     
     username_label.place(x=20, y=20)
     '''
+
     
     def custom_heatmap_colormap():
         """
@@ -54,7 +58,7 @@ def main(user):
         """
         Plot a calendar heatmap with horizontal cells.
         """
-        data = data.T
+        #data = data.T
         cmap = custom_heatmap_colormap()  # Choose colormap
         cell_width = 20  # Original cell width
         cell_height = 20  # Original cell height
@@ -76,10 +80,15 @@ def main(user):
                 y1 = y0 + cell_height  # Adjusted height
                 canvas.create_rectangle(x0, y0, x1, y1, fill=hex_color, outline="", tags="heatmap")
 
+    def selected_activity():
+        return combobox.get()
+
+
     def switch_to_timer():
+        activity = selected_activity()
         window.destroy()
         import TimerView
-        TimerView.main(user)
+        TimerView.main(user, activity)
         
     def close_button():
         window.destroy()
@@ -118,16 +127,35 @@ def main(user):
     calendar_app = CalendarApp(canvas)
     calendar_window = canvas.create_window(714, 450, anchor="nw", window=calendar_app)
 
+    
+
+    canvas.create_text(
+        220.0,
+        480.0,
+        text="Choose a Habit",
+        fill="#000000",
+        font=("Rockwell", 15)
+
+    )
+    canvas.create_text(
+        220.0,
+        480.0,
+        text="Choose a Habit",
+        fill="#000000",
+        font=("Rockwell", 15)
+
+    )
+
     combobox = ttk.Combobox(
     canvas,
-    values=["Option 1", "Option 2", "Option 3"],  # Replace with your options
+    values=user.get_activities_list(),  # Replace with your options
     width=20,
     font="Rockwell",
-    background="#1B6F6E",
-    foreground="#FFFFFF"
     )
 
     combobox.place(x=145, y=500)
+
+
 
     image_image_1 = PhotoImage(
         file=relative_to_assets("image_1.png"))
@@ -177,60 +205,14 @@ def main(user):
         height=25.0
     )
 
-    image_image_3 = PhotoImage(
-        file=relative_to_assets("image_3.png"))
-    image_3 = canvas.create_image(
-        695.0,
-        423.0,
-        image=image_image_3
-    )
 
-    image_image_4 = PhotoImage(
-        file=relative_to_assets("image_4.png"))
-    image_4 = canvas.create_image(
-        133.0,
-        310.0,
-        image=image_image_4
-    )
-
-    canvas.create_rectangle(
-        167.0,
-        210.0,
-        1222.0,
-        406.0,
-        fill="#FFFFFF",
-        outline="")
-
-    canvas.create_rectangle(
-        4.0,
-        0.0,
-        79.0,
-        840.0,
-        fill="#D9D9D9",
-        outline="")
-
-    canvas.create_text(
-        220.0,
-        480.0,
-        text="Choose a Habit",
-        fill="#000000",
-        font=("Rockwell", 15)
-
-    )
-    canvas.create_rectangle(
-        4.0,
-        0.0,
-        79.0,
-        840.0,
-        fill="#D9D9D9",
-        outline="")
     button_image_2 = PhotoImage(
         file=relative_to_assets("button_2.png"))
     button_2 = Button(
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print(f"button_2 clicked"),
+        command=lambda: print(selected_activity()),
         relief="flat"
     )
     button_2.place(
@@ -246,7 +228,7 @@ def main(user):
         image=button_image_3,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print(f"button_3 clicked {user.currentUser.username}"),
+        command=lambda: print(f"{user.get_activities_list()}"),
         relief="flat"
     )
     button_3.place(
@@ -280,12 +262,15 @@ def main(user):
         image=image_image_5
     )
 
-    today = date.today()
-    start_date = today - timedelta(days=30)
-    end_date = today + timedelta(days=335)
-    data = generate_fake_data(start_date, end_date)
+    user.print_activities_on_canvas(canvas, 100, 220)
 
-    plot_calendar_heatmap(data, start_date, canvas)
+    today = date.today()
+    start_date = today - timedelta(days=5)
+    end_date = today + timedelta(days=360)
+
+    #data = generate_fake_data(start_date, end_date)
+    user_heatmap = user.get_heatmap_data()
+    plot_calendar_heatmap(user_heatmap, start_date, canvas)
 
     window.resizable(False, False)
     window.mainloop()

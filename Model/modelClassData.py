@@ -35,6 +35,7 @@ class Data:
     def write_user_data(self):
         data = {}
         user_id = self.currentUser.token_id
+        activities = self.get_activities_list()  # Get the list of activities
         for activity in self.currentUser.activities:
             data[activity.activity_name] = {}
             for entry in activity.entries:
@@ -45,8 +46,33 @@ class Data:
                     "notes": entry.notes
                 }
                 data[activity.activity_name][entry.date_performed] = entry_to_write
+
+        # Check if activity exists, if not, create a new one
+        for activity_name in activities:
+            if activity_name not in data:
+                new_activity = Activity(activity_name)
+                self.currentUser.activities.append(new_activity)
+                data[activity_name] = {}
+
         self.db.child("users").child(user_id).update(data)
         return data
+    def get_activities_list(self):
+        if self.currentUser is not None:
+            return [activity.activity_name for activity in self.currentUser.activities]
+        else:
+            return None
+    def print_activities_on_canvas(self, canvas, x, y_start):
+        activities = self.get_activities_list()
+        if activities:
+            for index, activity in enumerate(activities):
+                y = y_start + index * 29.5  # Adjust the spacing between activities as needed
+                canvas.create_text(
+                    x,
+                    y,
+                    text=activity,
+                    fill="#000000",
+                    font=("Rockwell", 15)
+                )
     def create_user(self, username, email, password):
         try:
             self.auth.create_user_with_email_and_password(email, password)

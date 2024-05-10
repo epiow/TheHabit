@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as colors
 from matplotlib.colors import to_hex
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import *
 from Model.modelClassData import Data
 database = Data()
 database.login_user("mega@megaa.moe", "Pass123.")
