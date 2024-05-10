@@ -3,7 +3,8 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import sys
 
 # Pachange nalang muna here ng link to Model
-sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
+#sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
+sys.path.append("C:/Users/Aaron Abadiano/softdesignLab/TheHabit/Model")
 from modelClassData import Data
 from modelFirebaseToPython import Firebase
 
@@ -44,7 +45,7 @@ def close_button():
     window.destroy()
 
 window = Tk()
-window.overrideredirect(True)  # Remove standard title bar
+#window.overrideredirect(True)  # Remove standard title bar
 
 # Get screen width and height
 screen_width = window.winfo_screenwidth()
