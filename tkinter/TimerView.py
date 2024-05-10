@@ -22,10 +22,9 @@ def main(user, activity_name):
 
 
     window = Tk()
-
+    window.title("TheHabit")
     window.geometry("633x840")
     window.configure(bg = "#FFFFFF")
-    window.overrideredirect(True)  # Remove standard title bar
 
     def close_button():
         window.destroy()
@@ -103,11 +102,14 @@ def main(user, activity_name):
 
         #NEED TO BE FIXED! HEATMAP PLOTTING DOES NOT WORK ON SOME VALUES
         user.currentUser.setCurrentActivity(activity_name)
-        user.currentUser.activities[user.currentUser.currentActivity].createEntry(today_date, round(elapsed_time)*5 , round(elapsed_time), 4, "")
+        user.currentUser.activities[user.currentUser.currentActivity].createEntry(today_date, round(elapsed_time), round(elapsed_time), 4, "")
         user.write_user_data()
 
     #    def createEntry(self, date_performed, time_set, time_elapsed, count, notes=""):
-
+    def back_to_dashboard():
+        window.destroy()
+        import MainDashboard
+        MainDashboard.main(user)
 
     def discard_time():
         global current_time, is_running
@@ -214,6 +216,17 @@ def main(user, activity_name):
         width=200.0,
         height=56.1619873046875
     )
+    back_image = PhotoImage(file=relative_to_assets("back.png"))
+
+    back_button = Button(
+        image=back_image, 
+        borderwidth=0,
+        highlightthickness=0,
+        command=back_to_dashboard,
+        relief="flat",
+        background="#D9D9D9"
+    )
+    back_button.place(x=15, y=12, width=53, height=32)
 
     button_image_5 = PhotoImage(
         file=relative_to_assets("image_5.png"))
@@ -235,7 +248,7 @@ def main(user, activity_name):
     image_image_1 = PhotoImage(
         file=relative_to_assets("image_1.png"))
     image_1 = canvas.create_image(
-        129.0,
+        320.0,
         78.0,
         image=image_image_1
     )
