@@ -1,4 +1,4 @@
-from .modelClassActivity import Activity
+from modelClassActivity import Activity
 class User():
     def __init__(self, email, token_id, username, password):
         self.email: str = email

@@ -1,6 +1,6 @@
 import pyrebase
 from datetime import datetime
-from .config import config_keys as keys
+from config import config_keys as keys
 
 class Firebase:
     def __init__(self):

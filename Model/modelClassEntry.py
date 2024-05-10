@@ -1,4 +1,4 @@
-from .modelClassCalendar import *
+from modelClassCalendar import *
 class Entry:
     def __init__(self, date_performed, time_set, time_elapsed, count, notes=""):
         self.date_performed: str = date_performed
