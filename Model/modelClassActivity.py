@@ -6,10 +6,10 @@ class Activity():
         self.currentEntry: int = None
         self.entries: list[Entry] = []
 
-    def createEntry(self, date_performed, time_set, time_elapsed, count):
+    def createEntry(self, date_performed, time_set, time_elapsed, count, notes=""):
         entryToIncrement = self.findEntry(date_performed)
         if entryToIncrement == None:
-            new_entry = Entry(date_performed, time_set, time_elapsed, count)
+            new_entry = Entry(date_performed, time_set, time_elapsed, count, notes)
             self.entries.append(new_entry)
             return True
         elif self.entries[entryToIncrement].time_set == time_set:
@@ -54,7 +54,11 @@ class Activity():
                 count += 1
             else:
                 streaks.append(count)
+                count = 0
             day += 1
+        return streaks
+    def getCurrentEntryNotes(self):
+        return self.entries[self.currentEntry].notes
     def findEntry(self, date_performed):
         for entry in self.entries:
             if entry.date_performed == date_performed:
@@ -68,11 +72,12 @@ class Activity():
             return self.entries[self.currentEntry]
         return None
     
-    def editEntry(self, date_performed=None, time_set=None, time_elapsed=None, count=None):
+    def editEntry(self, date_performed=None, time_set=None, time_elapsed=None, count=None, notes=None):
         dateSet = False
         timeSet = False
         elapsedSet = False
         countSet = False
+        notesSet = False
         if not self.findEntry(date_performed):
             if date_performed != None:
                 dateSet = True
@@ -86,7 +91,10 @@ class Activity():
             if count != None:
                 countSet = True
                 self.entries[self.currentEntry].count = count
-        return [dateSet, timeSet, elapsedSet, countSet]
+            if notes != None:
+                notesSet = True
+                self.entries[self.currentEntry].notes = notes
+        return [dateSet, timeSet, elapsedSet, countSet, notesSet]
                 
     def deleteEnty(self):
         del self.entries[self.currentEntry]
