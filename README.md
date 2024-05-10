@@ -6,7 +6,7 @@ As of now, the program is currently in progress.
 
 ## Dependencies:
 ```
-pip install flet
+pip install tk
 pip install Pyrebase4
 pip install setuptools
 ```
