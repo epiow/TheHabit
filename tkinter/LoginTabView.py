@@ -3,8 +3,8 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import sys
 
 # Pachange nalang muna here ng link to Model
-#sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
-sys.path.append("C:/Users/Aaron Abadiano/softdesignLab/TheHabit/Model")
+sys.path.append('c:/Users/FP Sangilan/Documents/Programming Projects/CPE106L/TheHabit/TheHabit/Model')
+#sys.path.append("C:/Users/Aaron /softdesignLab/TheHabit/Model")
 from modelClassData import Data
 from modelFirebaseToPython import Firebase
 
@@ -23,7 +23,7 @@ def login():
     email = entry_1.get()
     password = entry_2.get()
     logged_in_user = user.login_user(email, password)
-    if user:
+    if logged_in_user:
         # Login successful, perform any necessary actions
         # For example, you can open the next GUI
         open_next_gui()
@@ -34,7 +34,7 @@ def login():
 def switch_to_sign_up():
     window.destroy()
     import signUpView
-    signUpView.main(user)
+    signUpView.main()
 
 def open_next_gui():
     window.destroy()  

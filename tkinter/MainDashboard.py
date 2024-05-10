@@ -1,5 +1,5 @@
 from pathlib import Path
-from tkinter import Label, Tk, Canvas, PhotoImage, Button
+from tkinter import Label, Tk, Canvas, PhotoImage, Button, ttk
 from datetime import datetime, timedelta, date
 import matplotlib.pyplot as plt
 import numpy as np
@@ -118,6 +118,17 @@ def main(user):
     calendar_app = CalendarApp(canvas)
     calendar_window = canvas.create_window(714, 450, anchor="nw", window=calendar_app)
 
+    combobox = ttk.Combobox(
+    canvas,
+    values=["Option 1", "Option 2", "Option 3"],  # Replace with your options
+    width=20,
+    font="Rockwell",
+    background="#1B6F6E",
+    foreground="#FFFFFF"
+    )
+
+    combobox.place(x=145, y=500)
+
     image_image_1 = PhotoImage(
         file=relative_to_assets("image_1.png"))
     image_1 = canvas.create_image(
@@ -144,8 +155,8 @@ def main(user):
         relief="flat"
     )
     choose_activity_button.place(
-        x=273,
-        y=515,
+        x=400,
+        y=500,
         width=239,
         height=84
     )
@@ -198,6 +209,21 @@ def main(user):
         fill="#D9D9D9",
         outline="")
 
+    canvas.create_text(
+        220.0,
+        480.0,
+        text="Choose a Habit",
+        fill="#000000",
+        font=("Rockwell", 15)
+
+    )
+    canvas.create_rectangle(
+        4.0,
+        0.0,
+        79.0,
+        840.0,
+        fill="#D9D9D9",
+        outline="")
     button_image_2 = PhotoImage(
         file=relative_to_assets("button_2.png"))
     button_2 = Button(
