@@ -12,7 +12,7 @@ pip install setuptools
 ```
 
 ## Main Program:
-In order to run the program, the following code must be run in within the same folder as main.py. 
+In order to run the program, the following code must be run in the tkinter directory. 
 ```py
-python main.py
+python LoginTabView.py
 ```
