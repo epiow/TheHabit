@@ -11,6 +11,10 @@ class Activity():
         if entryToIncrement == None:
             new_entry = Entry(date_performed, time_set, time_elapsed, count, notes)
             self.entries.append(new_entry)
+            print("Incremented Successfully")
+            print(date_performed)
+            print(time_set)
+            print(self.activity_name)
             return True
         elif self.entries[entryToIncrement].time_set == time_set:
             self.entries[entryToIncrement].count += 1

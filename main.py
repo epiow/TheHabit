@@ -1,5 +1,5 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, PhotoImage, Button
+#from tkinter import Tk, Canvas, PhotoImage, Button
 from datetime import datetime, timedelta, date
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,7 +27,7 @@ def custom_heatmap_colormap():
     np.linspace(0.0,1.0,)
     cmap = colors.LinearSegmentedColormap.from_list(
         "custom_heatmap",
-        [(0.0, "#e"), (1.0, "#1BCF6E")],  # Color range (white to #1BCF6E)
+        [(0.0, "#e5e5e5"), (1.0, "#1BCF6E")],  # Color range (white to #1BCF6E)
     )
     return cmap
 

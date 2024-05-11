@@ -6,13 +6,13 @@ As of now, the program is currently in progress.
 
 ## Dependencies:
 ```
-pip install flet
+pip install tk
 pip install Pyrebase4
 pip install setuptools
 ```
 
 ## Main Program:
-In order to run the program, the following code must be run in main.py. 
+In order to run the program, the following code must be run in within the same folder as main.py. 
 ```py
-flet run main.py
+python main.py
 ```
