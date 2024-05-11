@@ -5,14 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as colors
 from matplotlib.colors import to_hex
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from Model.modelClassData import *
 database = Data()
 database.login_user("mega@megaa.moe", "Pass123.")
 database.read_user_data()
 test = database.write_user_data()
 tt2 = database.get_heatmap_data()
-
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / "assets" / "MainDashboardAssets"
 

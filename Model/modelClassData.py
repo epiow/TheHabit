@@ -1,14 +1,13 @@
-from modelClassUser import User
-from modelClassActivity import Activity
-from modelClassCalendar import Calendar, Year, Month, Day
-from modelClassEntry import Entry
+from Model.modelClassUser import User
+from Model.modelClassActivity import Activity
+from Model.modelClassCalendar import Calendar, Year, Month, Day
+from Model.modelClassEntry import Entry
 import pandas as pd
 import numpy as np
 import pyrebase
 import urllib.parse
 import json
-from config import config_keys as keys
-
+from Model.config import config_keys as keys
 class Data:
     def __init__(self):
         self.firebase = pyrebase.initialize_app(keys)
@@ -25,7 +24,7 @@ class Data:
                     self.currentUser.setCurrentActivity(activity_name)
                     currentActivity: Activity = self.currentUser.activities[self.currentUser.currentActivity]
                     for date_performed,entry_value in activity_entries.items():
-                        currentActivity.createEntry(date_performed, entry_value["time_set"], entry_value["time_elapsed"], entry_value["count"], entry_value["notes"])  
+                        currentActivity.createEntry(date_performed, entry_value["time_set"], entry_value["time_elapsed" ], entry_value["count"], entry_value["notes"])
             else:
                 print("No user data found for user:", user_id)
                 return None
@@ -40,10 +39,12 @@ class Data:
             for entry in activity.entries:
                 entry_to_write = {
                     "count": entry.count,
-                    "time_elapsed": entry.time_elapsed,
+                    "time_elapsed": [],
                     "time_set": entry.time_set,
                     "notes": entry.notes
                 }
+                for time in entry.time_elapsed:
+                    entry_to_write["time_elapsed"].append(time)
                 data[activity.activity_name][entry.date_performed] = entry_to_write
         self.db.child("users").child(user_id).update(data)
         return data
@@ -78,6 +79,12 @@ class Data:
         for activity in self.currentUser.activities:
             heatmap_data.append(activity.calculateHeatmap())
         return heatmap_data
+    def get_streak_data(self):
+        start_date = None
+        streak_data: list = []
+        for activity in self.currentUser.activities:
+            streak_data.append(activity.calculateStreak())
+        return streak_data
     def editUser(self, username=None, password=None):
         if self.currentUser is not None:
             if username is not None:
